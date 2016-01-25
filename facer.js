@@ -1,5 +1,11 @@
 'use strict';
 
+/* TODO
+ *   write log module to write and print
+ *   add countdown timer
+ *   add CSS
+ */
+
 var http = require('http')
   , fs   = require('fs')
   , log = console.log
