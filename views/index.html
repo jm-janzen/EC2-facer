@@ -17,8 +17,28 @@
 
 <script>
 	$(document).ready(function () {
-		var now = new Date();
-		$('div#timer').html(now);
+
+		var remaining = 6666;
+		var counter   = setInterval(timer, 10);
+		function timer() {
+			remaining = remaining - 1;
+			if (remaining <= 0) {
+				clearInterval(counter);
+				console.log('done');
+				return;
+			}
+			$('div#timer').html(beautify(new Date()));
+		}
+		function beautify(date) {
+			return (date.getDate()
+			  + '/' + date.getMonth() + 1
+			  + '/' + date.getFullYear()
+			  + ' ' + date.getHours()
+			  + ':' + date.getMinutes()
+			  + ':' + date.getSeconds()
+			  + ':' + date.getMilliseconds());
+		}
 	});
+
 </script>
 </body>
