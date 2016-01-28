@@ -31,39 +31,23 @@ child.on('restart', function () {
 	log('restarting server for %s time', child.times);
 });
 
-//fs.readFile('./views/index.html', function (error, html) {
-//	if (error) throw error;
-//
-//	http.createServer(function (req, res) {
-//		log('[%s]\n\tMethod: %s,\n\tURI:    %s,\n\tIP:     %s'
-//			, new Date()
-//			, req.method
-//			, req.url
-//			, req.connection.remoteAddress);
-//		// TODO set content-type to text/css for *.css file :p
-//		res.writeHeader(200, {'Content-Type' : 'text/html' });
-//		res.write(html);
-//		res.end();
-//	}).listen(PORT, function () {
-//		log('server listening on port', PORT);
-//	});
-//});
-
 http.createServer(function (req, res) {
-	// XXX presently breaks server
-	if (req.url.indexOf('.html') != -1) {
-		fs.readFile(__dirName + '/views/index.html', function (error, html) {
+	var dirName = fs.realpathSync('.');
+	var path = req.url;
+	console.log('req:', path);
+	if (path.indexOf('/') != -1) {
+		fs.readFile(dirName + '/views/index.html', function (error, html) {
 			if (error) log('Error loading html:', error);
 			res.writeHeader(200, {'Content-Type' : 'text/html' });
 			res.write(html);
 			res.end();
 		});
 	}
-	if (req.url.indexOf('.css') != -1) {
-		fs.readFile(__dirName + '/views/style.css', function (error, css) {
+	if (path.indexOf('/views/style.css') != -1) {
+		fs.readFile(dirName + '/views/style.css', function (error, css) {
 			if (error) log('Error loading css:', error);
 			res.writeHeader(200, {'Content-Type' : 'text/css' });
-			res.write(html);
+			res.write(css);
 			res.end();
 		});
 	}
