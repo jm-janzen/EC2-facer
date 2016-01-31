@@ -5,45 +5,28 @@
 	<title>JM Janzen - index</title>
 <base href='/'>
 	<meta charset='utf-8'>
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
-	<link type="text/css" rel="stylesheet" href="styles/style.css" />
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-		crossorigin="anonymous">
-	</script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
-<body>
-<h1> hello </h1>
-<div id='container'>
-    <div id='timer'>
-        // timer
 
-    </div>
-</div>
+<body>
+<nav class='navbar navbar-inverse navbar-fixed-top'>
+    <div class='container'>
+        <div class='navbar-header'>
+            <button type='button' class='navbar-toggle collapsed' data-toggle='collapse'
+              data-target='#navbar' > <!-- etc -->
+                <span class='sr-only'>toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+            </button>
+            <a class='navbar-brand' href='#'>JM Janzen</a>
+        </div>
 
 <script>
 	$(document).ready(function () {
-
-		var remaining = 6666;
-		var counter   = setInterval(timer, 10);
-		function timer() {
-			remaining = remaining - 1;
-			if (remaining <= 0) {
-				clearInterval(counter);
-				console.log('done');
-				return;
-			}
-			$('div#timer').html(beautify(new Date()));
-		}
-		function beautify(date) {
-			return (date.getDate()
-			  + '/' + date.getMonth() + 1
-			  + '/' + date.getFullYear()
-			  + ' ' + date.getHours()
-			  + ':' + date.getMinutes()
-			  + ':' + date.getSeconds()
-			  + ':' + date.getMilliseconds());
-		}
+        // XXX disabled for now
 	});
 
 </script>
