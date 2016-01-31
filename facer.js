@@ -4,22 +4,30 @@
  *   write log module to write and print
  *   add countdown timer
  */
-var http = require('http')
-  , fs   = require('fs')
-  , log = console.log
-  , PORT = 6060;
+var http    = require('http')
+  , fs      = require('fs')
+  , log     = console.log
+  , PORT    = 6060
+  , express = require('express')
+  , app     = express();
 
-var express = require('express');
-var app     = express();
-
+/*
+ * use ejs to serve static files
+ */
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
 app.use(express.static(__dirname + '/views'));
+
+/*
+ * HTTP request routers
+ */
 app.get('/', function (req, res) {
 	res.render('index.html');
 });
 
+/*
+ * listen on port 6060 (rerouted from 80)
+ */
 app.listen(PORT, function () {
 	console.log('facer listening on port', PORT);
 });
