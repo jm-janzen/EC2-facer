@@ -9,19 +9,28 @@ var http    = require('http')
   , log     = console.log
   , PORT    = 6060
   , express = require('express')
-  , app     = express();
+  , app     = express()
+  , util    = require('util');
 
 /*
  * use ejs to serve static files
  */
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/'));
 
 /*
  * HTTP request routers
  */
-app.get('/', function (req, res) {
+app.get('/', function (req, res, next) {
+    var info = util.format('[%s]: %s,\t%s,\t%s',
+      new Date(), req.method, req.ip, req.path);
+    info += '\n';
+    fs.appendFile('logs/connect.log', info, function (error) {
+        if (error) throw new Error(("Error writing to file: " + error));
+    });
+    next();
+}, function (req, res, next) {
 	res.render('index.html');
 });
 
@@ -43,11 +52,9 @@ var child = new (forever.Monitor)('facer.js', {
 });
 child.on('exit', function () {
 	log('server.js has exited after 3 restart');
-});
-child.on('watch:restart', function (info) {
+}).on('watch:restart', function (info) {
 	log('restarting server because "%s" changed', info.file);
-});
-child.on('restart', function () {
+}).on('restart', function () {
 	log('restarting server for %s time', child.times);
 });
 
