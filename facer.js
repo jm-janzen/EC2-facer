@@ -23,12 +23,7 @@ app.use(express.static(__dirname + '/'));
  * HTTP request routers
  */
 app.get('/', function (req, res, next) {
-    var info = util.format('[%s]: %s,\t%s,\t%s',
-      new Date(), req.method, req.ip, req.path);
-    info += '\n';
-    fs.appendFile('logs/connect.log', info, function (error) {
-        if (error) throw new Error(("Error writing to file: " + error));
-    });
+    logConnection(req);
     next();
 }, function (req, res, next) {
 	res.render('index.ejs');
@@ -40,6 +35,15 @@ app.get('/', function (req, res, next) {
 app.listen(PORT, function () {
 	console.log('facer listening on port', PORT);
 });
+
+function logConnection(req) {
+    var info = util.format('[%s]: %s,\t%s,\t%s',
+      new Date(), req.method, req.ip, req.path);
+    info += '\n';
+    fs.appendFile('logs/connect.log', info, function (error) {
+        if (error) throw new Error(("Error writing to file: " + error));
+    });
+}
 
 /*
  * restart server on file change
