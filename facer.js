@@ -26,25 +26,33 @@ app.get('/', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('index');
+	res.render('index.ejs', {
+        focus: 'HOME'
+    });
 });
 app.get('/projects', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('projects');
+	res.render('projects.ejs', {
+        focus: 'PROJECTS'
+    });
 });
 app.get('/about', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('about');
+	res.render('about.ejs', {
+        focus: 'ABOUT'
+    });
 });
 app.get('/contact', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('contact');
+	res.render('contact.ejs', {
+        focus: 'CONTACT'
+    });
 });
 
 /*
