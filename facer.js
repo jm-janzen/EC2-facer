@@ -28,6 +28,24 @@ app.get('/', function (req, res, next) {
 }, function (req, res, next) {
 	res.render('index.ejs');
 });
+app.get('/projects', function (req, res, next) {
+    logConnection(req);
+    next();
+}, function (req, res, next) {
+	res.render('projects.ejs');
+});
+app.get('/about', function (req, res, next) {
+    logConnection(req);
+    next();
+}, function (req, res, next) {
+	res.render('about.ejs');
+});
+app.get('/contact', function (req, res, next) {
+    logConnection(req);
+    next();
+}, function (req, res, next) {
+	res.render('contact.ejs');
+});
 
 /*
  * listen on port 6060 (rerouted from 80)
