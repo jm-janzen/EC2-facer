@@ -26,25 +26,25 @@ app.get('/', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('index.ejs');
+	res.render('index');
 });
 app.get('/projects', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('projects.ejs');
+	res.render('projects');
 });
 app.get('/about', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('about.ejs');
+	res.render('about');
 });
 app.get('/contact', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res, next) {
-	res.render('contact.ejs');
+	res.render('contact');
 });
 
 /*
