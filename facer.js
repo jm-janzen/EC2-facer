@@ -31,7 +31,7 @@ app.get('/', function (req, res, next) {
     });
     next();
 }, function (req, res, next) {
-	res.render('index.html');
+	res.render('index.ejs');
 });
 
 /*
