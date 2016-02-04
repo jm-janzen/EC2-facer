@@ -1,8 +1,16 @@
 body {
-    padding-top: 50px;
+    background: linear-gradient(to left, #101d23, #89b3c7, #101d23);
 }
 
-.site-template {
-    padding: 40px 15px;
-    text-align: center;
+#timer {
+    background: dimgrey;
+    color: white;
 }
+
+.hero-unit {
+    background: black;
+    opacity: 0.5;
+    color: white;
+    padding: 10px;
+}
+
