@@ -6,7 +6,6 @@
   "dependencies": {
     "ejs": "~2.4.1",
     "express": "~4.13.4",
-    "forever-monitor": "~1.7.0"
   },
   "devDependencies": {},
   "scripts": {
