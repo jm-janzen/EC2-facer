@@ -58,6 +58,11 @@ app.get('/contact', function (req, res, next) {
         subject: 'get in contact'
     });
 });
+app.get('/robots.txt', function (req, res) {
+    logConnection(req);
+    res.type('text/plain');
+    res.send('User-agent: *\nDisallow: /');
+});
 
 /*
  * listen on port 6060 (rerouted from 80)
