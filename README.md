@@ -12,4 +12,9 @@ nodejs facer.js                                         /* run, then open browse
 forever -w facer.js                                     /* to automatically restart the server whenever
                                                          * you change a non *.log file */
 ```
+And if you're missing any of the commands above, simply...
+```bash
+sudo apt-get <package>
+``` 
+
 Hopefully this can give you a head start on starting your own web server!
