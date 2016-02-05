@@ -7,6 +7,22 @@ body {
     color: white;
 }
 
+#gitlog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -128; /* heh heh heh */
+    overflow: hidden;
+    opacity: 0.2;
+    color: #101d23;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    cursor: default;
+}
+
 .hero-unit {
     background: black;
     opacity: 0.5;

@@ -1,3 +1,4 @@
+<div id='gitlog'></div>
 <script>
 $(document).ready(function () {
 
@@ -23,7 +24,20 @@ $(document).ready(function () {
                   + ':' + date.getSeconds()
                   + ':' + date.getMilliseconds());
         }
+        showGitLog();
 });
+
+function showGitLog() {
+    $.ajax({
+        url: '/getGitLog',
+        success: function (result) {
+            $('div#gitlog').text(result.content);
+        },
+        error: function (error) {
+            console.log('error', error);
+        }
+    });
+}
 </script>
 </body>
 

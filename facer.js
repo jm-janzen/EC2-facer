@@ -20,6 +20,16 @@ app.set('view engine', 'html');
 app.use(express.static(__dirname + '/'));
 
 /*
+ * get git log file
+ * TODO seperate this into a module
+ */
+var fs = require('fs');
+var gitText = {};
+fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
+    if (! error) gitText = { 'content': data };
+});
+
+/*
  * HTTP request routers
  */
 app.get('/', function (req, res, next) {
@@ -62,6 +72,10 @@ app.get('/robots.txt', function (req, res) {
     logConnection(req);
     res.type('text/plain');
     res.send('User-agent: *\nDisallow: /');
+});
+app.get('/getGitLog', function (req, res) {
+    logConnection(req);
+    res.send(gitText);
 });
 
 /*
