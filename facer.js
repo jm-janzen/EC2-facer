@@ -71,7 +71,9 @@ app.get('/contact', function (req, res, next) {
 app.get('/robots.txt', function (req, res) {
     logConnection(req);
     res.type('text/plain');
-    res.send('User-agent: *\nDisallow: /');
+    res.send('#011000100110010101100101011100000010'
+    + '00000110001001101111011011110111000000100001'
+    + '\nUser-agent: *\nDisallow: /');
 });
 app.get('/getGitLog', function (req, res) {
     logConnection(req);
