@@ -1,32 +1,32 @@
 <div id='gitlog'></div>
 <script type='text/javascript'>
 
-        var counter   = setInterval(timer, 1);
-        function timer() {
-            var day           = (24 * 60 * 60 * 1000);
-            var now           = new Date();
-            var graduation    = new Date('April 19, 2016');
-            var remainingMili =
-              Math.round(Math.abs(now.getTime() - graduation.getTime()));
-            var remainingDays =
-              Math.round(Math.abs(now.getTime() - graduation.getTime()) / (day));
-            $('#timer').html(remainingMili
-              + 'ms until graduation (or '
-              +  remainingDays + ' days)');
-        }
-        showGitLog();
+    var counter   = setInterval(timer, 1);
+    function timer() {
+        var day           = (24 * 60 * 60 * 1000);
+        var now           = new Date();
+        var graduation    = new Date('April 19, 2016');
+        var remainingMili =
+            Math.round(Math.abs(now.getTime() - graduation.getTime()));
+        var remainingDays =
+            Math.round(Math.abs(now.getTime() - graduation.getTime()) / (day));
+        $('#timer').html(remainingMili
+            + 'ms until graduation (or '
+            +  remainingDays + ' days)');
+    }
+    showGitLog();
 
-function showGitLog() {
-    $.ajax({
-        url: '/getGitLog',
-        success: function (result) {
-            $('div#gitlog').text(result.content);
-        },
-        error: function (error) {
-            console.log('error', error);
-        }
-    });
-}
+    function showGitLog() {
+        $.ajax({
+            url: '/getGitLog',
+            success: function (result) {
+                $('div#gitlog').text(result.content);
+            },
+            error: function (error) {
+                console.log('error', error);
+            }
+        });
+    }
 </script>
 </body>
 
