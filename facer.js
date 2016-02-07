@@ -38,7 +38,7 @@ app.get('/', function (req, res, next) {
 }, function (req, res, next) {
 	res.render('index.ejs', {
         focus: 'HOME',
-        subject: 'hello'
+        subject: 'Hello'
     });
 });
 app.get('/projects', function (req, res, next) {
@@ -47,7 +47,7 @@ app.get('/projects', function (req, res, next) {
 }, function (req, res, next) {
 	res.render('projects.ejs', {
         focus: 'PROJECTS',
-        subject: 'my projects'
+        subject: 'My Projects'
     });
 });
 app.get('/about', function (req, res, next) {
@@ -56,7 +56,7 @@ app.get('/about', function (req, res, next) {
 }, function (req, res, next) {
 	res.render('about.ejs', {
         focus: 'ABOUT',
-        subject: 'about me'
+        subject: 'About Me'
     });
 });
 app.get('/contact', function (req, res, next) {
@@ -65,7 +65,7 @@ app.get('/contact', function (req, res, next) {
 }, function (req, res, next) {
 	res.render('contact.ejs', {
         focus: 'CONTACT',
-        subject: 'get in contact'
+        subject: 'Get in Contact'
     });
 });
 app.get('/robots.txt', function (req, res) {
