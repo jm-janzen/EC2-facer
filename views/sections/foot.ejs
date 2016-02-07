@@ -14,15 +14,15 @@
             + 'ms until graduation (or '
             +  remainingDays + ' days)');
     }
-        $.ajax({
-            url: '/getGitLog',
-            success: function (result) {
-                $('div#gitlog').text(result.content);
-            },
-            error: function (error) {
-                console.log('error', error);
-            }
-        });
+    $.ajax({
+        url: '/getGitLog',
+        success: function (result) {
+            $('div#gitlog').text(result.content);
+        },
+        error: function (error) {
+            console.log('error', error);
+        }
+    });
 </script>
 </body>
 
