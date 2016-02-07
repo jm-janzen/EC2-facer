@@ -76,8 +76,8 @@ app.get('/robots.txt', function (req, res) {
     + '\nUser-agent: *\nDisallow: /');
 });
 app.get('/getGitLog', function (req, res) {
-    logConnection(req);
     res.send(gitText);
+    logConnection(req);
 });
 
 /*
