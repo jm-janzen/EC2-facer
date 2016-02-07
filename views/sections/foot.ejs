@@ -1,6 +1,5 @@
 <div id='gitlog'></div>
 <script>
-$(document).ready(function () {
 
         var counter   = setInterval(timer, 1);
         function timer() {
@@ -25,7 +24,6 @@ $(document).ready(function () {
                   + ':' + date.getMilliseconds());
         }
         showGitLog();
-});
 
 function showGitLog() {
     $.ajax({
