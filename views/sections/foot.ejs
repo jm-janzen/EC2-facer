@@ -17,7 +17,7 @@
     $.ajax({
         url: '/getGitLog',
         success: function (result) {
-            $('div#gitlog').text(result.content);
+            $('div#gitlog').attr('data-content', result.content);
         },
         error: function (error) {
             console.log('error', error);

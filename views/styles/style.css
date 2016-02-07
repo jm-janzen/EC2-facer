@@ -22,6 +22,9 @@ body {
     -moz-user-select: none;
     cursor: default;
 }
+#gitlog:before {
+    content: attr(data-content);
+}
 
 .hero-unit {
     background: black;
