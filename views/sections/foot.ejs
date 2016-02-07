@@ -14,9 +14,6 @@
             + 'ms until graduation (or '
             +  remainingDays + ' days)');
     }
-    showGitLog();
-
-    function showGitLog() {
         $.ajax({
             url: '/getGitLog',
             success: function (result) {
@@ -26,7 +23,6 @@
                 console.log('error', error);
             }
         });
-    }
 </script>
 </body>
 
