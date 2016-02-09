@@ -61,10 +61,11 @@ app.get('/', function (req, res, next) {
 app.get('/body/:which', function (req, res, next) {
     var which = req.params.which;
 
-    // XXX deprecated warning here
-    res.status(200).json('content', {
-        subject: subjects[which],
-        content: bodies[which]
+    res.status(200).json({
+        data : {
+            subject: subjects[which],
+            content: bodies[which]
+        }
     });
 }, function (req, res) {
     logConnection(req);
