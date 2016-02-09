@@ -1,9 +1,5 @@
 'use strict';
 
-/* TODO
- *   write log module to write and print
- *   add countdown timer
- */
 var http    = require('http')
   , fs      = require('fs')
   , log     = console.log
@@ -67,33 +63,6 @@ app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
         focus: 'HOME',
         subject: 'Hello'
-    });
-});
-app.get('/projects', function (req, res, next) {
-    logConnection(req);
-    next();
-}, function (req, res, next) {
-	res.render('projects.ejs', {
-        focus: 'PROJECTS',
-        subject: 'My Projects'
-    });
-});
-app.get('/about', function (req, res, next) {
-    logConnection(req);
-    next();
-}, function (req, res, next) {
-	res.render('about.ejs', {
-        focus: 'ABOUT',
-        subject: 'About Me'
-    });
-});
-app.get('/contact', function (req, res, next) {
-    logConnection(req);
-    next();
-}, function (req, res, next) {
-	res.render('contact.ejs', {
-        focus: 'CONTACT',
-        subject: 'Get in Contact'
     });
 });
 app.get('/body/:which', function (req, res, next) {
