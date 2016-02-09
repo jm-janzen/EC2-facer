@@ -23,6 +23,25 @@
             console.log('error', error);
         }
     });
+    $( document ).ready(function () {
+        $('a#ajax').click(function (event) {
+            // remove present content, and load new from server
+            $.ajax({
+                url: '/body-' + 'ajax',
+                success: function (result) {
+                    $('p.body').html('');
+                    $('ul.nav li').siblings('.active').removeClass('active');
+                    $('ul.nav li a#ajax').parent().addClass('active');
+                    $('p.body').html(result.content);
+                    $('div.page-header h1').html(result.subject);
+                },
+                error: function (result) {
+                    console.error('Error:', result);
+                }
+            });
+        });
+
+    });
 </script>
 </body>
 

@@ -68,6 +68,18 @@ app.get('/contact', function (req, res, next) {
         subject: 'Get in Contact'
     });
 });
+app.get('/body-ajax', function (req, res, next) { // TODO generalise body-*
+    console.log('dump\n%s\nendump', req);
+    logConnection(req);
+    next();
+}, function (req, res) {
+    // TODO send status
+    res.send('content', {
+        focus: 'AJAX',
+        subject: 'Ajax Test',
+        content: 'some html',
+    });
+});
 app.get('/robots.txt', function (req, res) {
     logConnection(req);
     res.type('text/plain');
