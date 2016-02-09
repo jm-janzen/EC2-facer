@@ -24,14 +24,15 @@
         }
     });
     $( document ).ready(function () {
-        $('a#ajax').click(function (event) {
+        $('a').click(function (event) {
+                var which = $(this).text()
             // remove present content, and load new from server
             $.ajax({
-                url: '/body-' + 'ajax',
+                url: '/body/' + which,
                 success: function (result) {
                     $('p.body').html('');
                     $('ul.nav li').siblings('.active').removeClass('active');
-                    $('ul.nav li a#ajax').parent().addClass('active');
+                    $('ul.nav li a:contains("' + which + '")').parent().addClass('active');
                     $('p.body').html(result.content);
                     $('div.page-header h1').html(result.subject);
                 },
@@ -40,7 +41,6 @@
                 }
             });
         });
-
     });
 </script>
 </body>

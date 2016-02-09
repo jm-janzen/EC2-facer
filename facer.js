@@ -30,6 +30,34 @@ fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
 });
 
 /*
+ * read body files for later serving
+ */
+var bodies = {};
+var subjects = { // TODO home '/'
+    ajax: 'ajaxxx'
+    , projects: 'My Projects'
+    , about: 'About Me'
+    , contact: 'Get in Touch'
+    , home: 'Hello'
+};
+// TODO make this less unwieldy
+fs.readFile('./views/bodies/body-ajax.ejs', 'utf8', function (error, data) {
+    if (! error) bodies.ajax = data;
+})
+fs.readFile('./views/bodies/body-about.ejs', 'utf8', function (error, data) {
+    if (! error) bodies.about = data;
+});
+fs.readFile('./views/bodies/body-projects.ejs', 'utf8', function (error, data) {
+    if (! error) bodies.projects = data;
+});
+fs.readFile('./views/bodies/body-contact.ejs', 'utf8', function (error, data) {
+    if (! error) bodies.contact = data;
+});
+fs.readFile('./views/bodies/body-home.ejs', 'utf8', function (error, data) {
+    if (! error) bodies.home = data;
+});
+
+/*
  * HTTP request routers
  */
 app.get('/', function (req, res, next) {
@@ -68,16 +96,16 @@ app.get('/contact', function (req, res, next) {
         subject: 'Get in Contact'
     });
 });
-app.get('/body-ajax', function (req, res, next) { // TODO generalise body-*
-    console.log('dump\n%s\nendump', req);
+app.get('/body/:which', function (req, res, next) {
     logConnection(req);
     next();
 }, function (req, res) {
-    // TODO send status
-    res.send('content', {
-        focus: 'AJAX',
-        subject: 'Ajax Test',
-        content: 'some html',
+    var which = req.params.which;
+
+    // XXX deprecated warning here
+    res.status(200).json('content', {
+        subject: subjects[which],
+        content: bodies[which]
     });
 });
 app.get('/robots.txt', function (req, res) {
