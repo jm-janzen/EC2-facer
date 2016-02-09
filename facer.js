@@ -29,17 +29,13 @@ fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
  * read body files for later serving
  */
 var bodies = {};
-var subjects = { // TODO home '/'
-    ajax: 'ajaxxx'
-    , projects: 'My Projects'
+var subjects = {
+    projects: 'My Projects'
     , about: 'About Me'
     , contact: 'Get in Touch'
     , home: 'Hello'
 };
 // TODO make this less unwieldy
-fs.readFile('./views/bodies/body-ajax.ejs', 'utf8', function (error, data) {
-    if (! error) bodies.ajax = data;
-})
 fs.readFile('./views/bodies/body-about.ejs', 'utf8', function (error, data) {
     if (! error) bodies.about = data;
 });
@@ -104,21 +100,3 @@ function logConnection(req) {
         if (error) throw new Error(("Error writing to file: " + error));
     });
 }
-
-/*
- * restart server on file change
- */
-var forever = require('forever-monitor');
-var child = new (forever.Monitor)('facer.js', {
-	max: 3,
-	silent: true,
-	args: []
-});
-child.on('exit', function () {
-	log('server.js has exited after 3 restart');
-}).on('watch:restart', function (info) {
-	log('restarting server because "%s" changed', info.file);
-}).on('restart', function () {
-	log('restarting server for %s time', child.times);
-});
-
