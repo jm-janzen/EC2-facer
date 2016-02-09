@@ -53,18 +53,15 @@ fs.readFile('./views/bodies/body-home.ejs', 'utf8', function (error, data) {
  * HTTP request routers
  */
 app.get('/', function (req, res, next) {
-    logConnection(req);
-    next();
-}, function (req, res, next) {
 	res.render('index.ejs', {
         focus: 'HOME',
         subject: 'Hello'
     });
-});
-app.get('/body/:which', function (req, res, next) {
+}, function (req, res, next) {
     logConnection(req);
     next();
-}, function (req, res) {
+});
+app.get('/body/:which', function (req, res, next) {
     var which = req.params.which;
 
     // XXX deprecated warning here
@@ -72,6 +69,9 @@ app.get('/body/:which', function (req, res, next) {
         subject: subjects[which],
         content: bodies[which]
     });
+}, function (req, res) {
+    logConnection(req);
+    next();
 });
 app.get('/robots.txt', function (req, res) {
     logConnection(req);
