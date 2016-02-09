@@ -2,7 +2,6 @@
 
 var http    = require('http')
   , fs      = require('fs')
-  , log     = console.log
   , PORT    = 6060
   , express = require('express')
   , app     = express()
@@ -19,7 +18,6 @@ app.use(express.static(__dirname + '/'));
  * get git log file
  * TODO seperate this into a module
  */
-var fs = require('fs');
 var gitText = {};
 fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
     if (! error) gitText = { 'content': data };
@@ -54,7 +52,6 @@ fs.readFile('./views/bodies/body-home.ejs', 'utf8', function (error, data) {
  */
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        focus: 'HOME',
         subject: 'Hello'
     });
 }, function (req, res, next) {
