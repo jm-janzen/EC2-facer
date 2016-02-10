@@ -30,10 +30,10 @@
             $.ajax({
                 url: '/body/' + which,
                 success: function (result) {
-                    $('p.body').html('');
+                    $('div.body').empty();
                     $('ul.nav li').siblings('.active').removeClass('active');
                     $('ul.nav li a:contains("' + which + '")').parent().addClass('active');
-                    $('p.body').html(result.data.content);
+                    $('div.body').append(result.data.content);
                     $('div.page-header h1').html(result.data.subject);
                 },
                 error: function (result) {
