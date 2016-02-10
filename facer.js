@@ -91,10 +91,13 @@ app.listen(PORT, function () {
 });
 
 function logConnection(req) {
-    var info = util.format('[%s]: %s,\t%s,\t%s',
-      new Date(), req.method, req.ip, req.path);
-    info += '\n';
-    fs.appendFile('logs/connect.log', info, function (error) {
-        if (error) throw new Error(("Error writing to file: " + error));
-    });
+    // if not my public IP
+    if (req.ip !== '67.193.120.178') {
+        var info = util.format('[%s]: %s,\t%s,\t%s',
+          new Date(), req.method, req.ip, req.path);
+        info += '\n';
+        fs.appendFile('logs/connect.log', info, function (error) {
+            if (error) throw new Error(("Error writing to file: " + error));
+        });
+    }
 }
