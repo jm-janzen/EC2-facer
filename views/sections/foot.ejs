@@ -24,6 +24,7 @@
         }
     });
     $( document ).ready(function () {
+        // TODO fix middle-click on github link bug
         $('a').click(function (event) {
             if ((which = $(this).not('#timer').text()) !== '') {
                 // remove present content, and load new from server
