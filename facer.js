@@ -33,19 +33,10 @@ var subjects = {
     , contact: 'Get in Touch'
     , home: 'Hello'
 };
-// TODO make this less unwieldy
-fs.readFile('./views/bodies/body-about.ejs', 'utf8', function (error, data) {
-    if (! error) bodies.about = data;
-});
-fs.readFile('./views/bodies/body-projects.ejs', 'utf8', function (error, data) {
-    if (! error) bodies.projects = data;
-});
-fs.readFile('./views/bodies/body-contact.ejs', 'utf8', function (error, data) {
-    if (! error) bodies.contact = data;
-});
-fs.readFile('./views/bodies/body-home.ejs', 'utf8', function (error, data) {
-    if (! error) bodies.home = data;
-});
+var files = [ 'about', 'projects', 'contact', 'home'];
+for (var i = 0; i < files.length; i++) {
+    bodies[files[i]] = fs.readFileSync('./views/bodies/body-' + files[i] + '.ejs', 'utf8');
+}
 
 /*
  * HTTP request routers
