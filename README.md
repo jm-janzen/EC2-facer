@@ -8,9 +8,6 @@ cd EC2-facer                                            /* change directory to c
 npm install                                             /* install the dependencies facer requires */
 nodejs facer.js                                         /* run, then open browser at the specified port,
                                                          * at your server's IP, or DNS */
-/* OR */
-forever -w facer.js                                     /* to automatically restart the server whenever
-                                                         * you change a non *.log file */
 ```
 And if you're missing any of the commands above, simply...
 ```bash
