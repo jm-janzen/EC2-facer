@@ -28,7 +28,7 @@ fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
  */
 var bodies = {};
 var subjects = {
-    projects: 'My Projects'
+    projects: 'Personal Projects'
     , about: 'About Me'
     , contact: 'Get in Touch'
     , home: 'Hello'
