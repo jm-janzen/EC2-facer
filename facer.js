@@ -43,7 +43,8 @@ for (var i = 0; i < files.length; i++) {
  */
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        subject: 'Hello'
+        subject: 'Hello',
+        content: bodies['home']
     });
 }, function (req, res, next) {
     logConnection(req);
