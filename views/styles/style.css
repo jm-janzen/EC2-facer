@@ -1,9 +1,10 @@
 body {
     background: linear-gradient(to left, #101d23, #89b3c7, #101d23);
+    font-family: Verdana, Courier, monospace;
 }
 
 ul {
-    padding-left: 2em;
+    padding-left: 1.5em;
 }
 
 #timer {
