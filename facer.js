@@ -28,10 +28,10 @@ fs.readFile('./views/gitlog.txt', 'utf8', function (error, data) {
  */
 var bodies = {};
 var subjects = {
-    projects: 'Personal Projects'
-    , about: 'About Me'
-    , contact: 'Get in Touch'
-    , home: 'Hello'
+    projects:   'Personal Projects'
+    , about:    'About Me'
+    , contact:  'Get in Touch'
+    , home:     'Hello'
 };
 var files = [ 'about', 'projects', 'contact', 'home'];
 for (var i = 0; i < files.length; i++) {
@@ -54,7 +54,7 @@ app.get('/body/:which', function (req, res, next) {
     var which = req.params.which;
 
     res.status(200).json({
-        data : {
+        data: {
             subject: subjects[which],
             content: bodies[which]
         }
