@@ -18,7 +18,9 @@ ul {
     right: 0;
     bottom: 0;
     z-index: -128; /* heh heh heh */
-    overflow: hidden;
+    display: block;
+    clear: both;
+    word-wrap: break-word;
     opacity: 0.2;
     color: #101d23;
     user-select: none;
