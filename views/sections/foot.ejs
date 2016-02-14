@@ -25,7 +25,7 @@
     });
 
     $( document ).ready(function () {
-        $('a').click(function (event) {
+        $('div#navbar a').click(function (event) {
             if ((which = $(this).not('#timer, .navbar-brand').text()) !== '') {
                 // remove present content, and load new from server
                 $.ajax({
