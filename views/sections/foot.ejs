@@ -23,8 +23,8 @@
             console.log('error', error);
         }
     });
+
     $( document ).ready(function () {
-        // TODO fix middle-click on github link bug
         $('a').click(function (event) {
             if ((which = $(this).not('#timer, .navbar-brand').text()) !== '') {
                 // remove present content, and load new from server
@@ -41,6 +41,13 @@
                         console.error('Error:', result);
                     }
                 });
+            }
+        });
+
+        // collapse navbar on click (mobile)
+        $(document).on('click','.navbar-collapse.in',function(e) {
+            if( $(e.target).is('a') ) {
+                $(this).collapse('hide');
             }
         });
     });
