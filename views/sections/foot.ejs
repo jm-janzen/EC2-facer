@@ -37,6 +37,9 @@
         $(document).click(function () {
             $('.navbar-collapse').collapse('hide');
         });
+
+        var navs = ['home', 'projects', 'about', 'contact'];
+        var here = 0;
         $(document).keydown(function (event) {
             switch (event.which) {
                 case 74: // j: scroll down
@@ -45,11 +48,16 @@
                 case 75: // k: scroll up
                     window.scrollBy(0, -30);
                     break;
-                case 72: // h: next nav
+                case 72: // h: prev nav
+                    here = here <= 0 ? 3 : here - 1;
+                    var to  = navs[here % navs.length];
+                    navigate(to);
                     break;
-                case 76: // l: prev nav
+                case 76: // l: next nav
+                    here = here >= navs.length ? 0 : here + 1;
+                    var to = navs[here % navs.length];
+                    navigate(to);
                     break;
-
             }
         });
     });
@@ -57,14 +65,14 @@
     function navigate(to) {
         // remove present content, and load new from server
         $.ajax({
-            url: '/body/' + which,
+            url: '/body/' + to,
             success: function (result) {
                 $('div.body')
                   .empty();
                 $('ul.nav li')
                   .siblings('.active')
                   .removeClass('active');
-                $('ul.nav li a:contains("' + which + '")')
+                $('ul.nav li a:contains("' + to + '")')
                   .parent()
                   .addClass('active');
                 $('div.body')
