@@ -1,6 +1,8 @@
 <div id='gitlog'></div>
 <script type='text/javascript'>
 
+    var navs = ['home', 'projects', 'about', 'contact'];
+    var here = 0;
     var counter   = setInterval(timer, 1);
     function timer() {
         var day           = (24 * 60 * 60 * 1000);
@@ -30,7 +32,7 @@
               .not('#timer, .navbar-brand')
               .text()) !== '') {
                 here = navs.indexOf(which);
-                navigate(which);
+                navigate(which, here);
             }
         });
 
@@ -39,8 +41,6 @@
             $('.navbar-collapse').collapse('hide');
         });
 
-        var navs = ['home', 'projects', 'about', 'contact'];
-        var here = 0;
         $(document).keydown(function (event) {
             switch (event.which) {
                 case 74: // j: scroll down
@@ -50,46 +50,76 @@
                     window.scrollBy(0, -30);
                     break;
                 case 72: // h: prev nav
+                    var from = here;
                     here = here <= 0 ? 3 : here - 1;
                     var to  = navs[here % navs.length];
-                    navigate(to);
+                    navigate(to, from);
                     break;
                 case 76: // l: next nav
+                    var from = here;
                     here = here >= navs.length ? 0 : here + 1;
                     var to = navs[here % navs.length];
-                    navigate(to);
+                    navigate(to, from);
                     break;
             }
         });
     });
 
-    function navigate(to) {
+    function navigate(to, from) {
         // remove present content, and load new from server
-        $.ajax({
-            url: '/body/' + to,
-            success: function (result) {
-                // update navbar
-                $('ul.nav li')
-                  .siblings('.active')
-                  .removeClass('active');
-                $('ul.nav li a:contains("' + to + '")')
-                  .parent()
-                  .addClass('active');
+        /*
+         * check if content already loaded from server,
+         * if it is, just swap visibility of present and
+         * desired content
+         */
+        if ($('div.body div#body-' + to).length === 0) {
+            $.ajax({
+                url: '/body/' + to,
+                success: function (result) {
+                    // update navbar
+                    $('ul.nav li')
+                      .siblings('.active')
+                      .removeClass('active');
+                    $('ul.nav li a:contains("' + to + '")')
+                      .parent()
+                      .addClass('active');
+    
+                    // update content
+                    $('div.body div')
+                      .not('#body-' + navs[here])
+                      .css('display', 'none');
+                    $('div.body')
+                      .append(result.data.content);
+    
+                    // update title
+                    $('div.page-header h1')
+                      .html(result.data.subject);
+                },
+                error: function (result) {
+                    console.error('Error:', result);
+                }
+            });
+        } else {
+            console.log('moo');
+            // TODO make these DRY
+            $('ul.nav li')
+                .siblings('.active')
+                .removeClass('active');
+            $('ul.nav li a:contains("' + to + '")')
+                .parent()
+                .addClass('active');
 
-                // update content
-                $('div.body')
-                  .empty();
-                $('div.body')
-                  .append(result.data.content);
+            // update content
+            $('div.body div')
+                .not('#body-' + navs[here])
+                .css('display', 'none');
+            $('div.body div#body-' + to)
+                .css('display', 'block');
 
-                // update title
-                $('div.page-header h1')
-                  .html(result.data.subject);
-            },
-            error: function (result) {
-                console.error('Error:', result);
-            }
-        });
+            // update title
+            $('div.page-header h1')
+                .html(navs[here]);
+        }
     }
 </script>
 </body>
