@@ -29,11 +29,7 @@
             if ((which = $(this)
               .not('#timer, .navbar-brand')
               .text()) !== '') {
-                for (var i in navs) {
-                    if (navs[i] === which) {
-                        here = i;
-                    }
-                }
+                here = navs.indexOf(which);
                 navigate(which);
             }
         });
