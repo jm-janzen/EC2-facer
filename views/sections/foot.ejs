@@ -68,16 +68,21 @@
         $.ajax({
             url: '/body/' + to,
             success: function (result) {
-                $('div.body')
-                  .empty();
+                // update navbar
                 $('ul.nav li')
                   .siblings('.active')
                   .removeClass('active');
                 $('ul.nav li a:contains("' + to + '")')
                   .parent()
                   .addClass('active');
+
+                // update content
+                $('div.body')
+                  .empty();
                 $('div.body')
                   .append(result.data.content);
+
+                // update title
                 $('div.page-header h1')
                   .html(result.data.subject);
             },
