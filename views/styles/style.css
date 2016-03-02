@@ -1,6 +1,7 @@
 body {
     background: linear-gradient(to left, #101d23, #89b3c7, #101d23);
     font-family: Verdana, Courier, monospace;
+    padding-top: 70px;
 }
 
 ul {
