@@ -89,7 +89,14 @@
     
                     // update title
                     $('div.page-header h1')
-                      .html(result.data.subject);
+                      .not('h1#subject-' + navs[here])
+                      .css('display', 'none');
+
+                    $('div.page-header')
+                      .append('<h1 id="subject-'
+                        + navs[here] + '">'
+                        + result.data.subject
+                        + '</h1>');
                 },
                 error: function (result) {
                     console.error('Error:', result);
@@ -101,14 +108,25 @@
 
             // update content
             $('div.body div')
-                .not('#body-' + navs[here])
-                .css('display', 'none');
+              .not('#body-' + navs[here])
+              .css('display', 'none');
             $('div.body div#body-' + to)
-                .css('display', 'block');
+              .css('display', 'block');
 
             // update title
             $('div.page-header h1')
-                .html(navs[here]);
+              .not('#subject-' + navs[here])
+              .css('display', 'none');
+            $('div.page-header h1#subject-' + to)
+              .css('display', 'block');
+
+            // if 'Home' subject
+            if ($('div.page-header h1#subject-' + to).length === 0) {
+                $('div.page-header h1')
+                  .not('[id^="subject"]')
+                  .attr('id', 'subject-' + to)
+                  .css('display', 'block');
+            }
         }
     }
 
