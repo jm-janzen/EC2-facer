@@ -67,13 +67,12 @@
         });
     });
 
+    /*
+     * check if content already loaded from server,
+     * if it is, just swap visibility of present and
+     * desired content
+     */
     function navigate(to, from) {
-        // remove present content, and load new from server
-        /*
-         * check if content already loaded from server,
-         * if it is, just swap visibility of present and
-         * desired content
-         */
         if ($('div.body div#body-' + to).length === 0) {
             $.ajax({
                 url: '/body/' + to,
