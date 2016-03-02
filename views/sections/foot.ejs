@@ -57,7 +57,7 @@
                     break;
                 case 76: // l: next nav
                     var from = here;
-                    here = here >= navs.length ? 0 : here + 1;
+                    here = here >= navs.length - 1 ? 0 : here + 1;
                     var to = navs[here % navs.length];
                     navigate(to, from);
                     break;
