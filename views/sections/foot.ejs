@@ -50,12 +50,14 @@
                     window.scrollBy(0, -30);
                     break;
                 case 72: // h: prev nav
+                case 37:
                     var from = here;
                     here = here <= 0 ? 3 : here - 1;
                     var to  = navs[here % navs.length];
                     navigate(to, from);
                     break;
                 case 76: // l: next nav
+                case 39:
                     var from = here;
                     here = here >= navs.length - 1 ? 0 : here + 1;
                     var to = navs[here % navs.length];
