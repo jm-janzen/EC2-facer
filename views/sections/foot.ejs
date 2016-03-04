@@ -71,55 +71,25 @@
     /*
      * check if content already loaded from server,
      * if it is, just swap visibility of present and
-     * desired content
+     * desired content. Else, append fresh data.
      */
     function navigate(to, from) {
         if ($('div.body div#body-' + to).length === 0) {
             $.ajax({
                 url: '/body/' + to,
                 success: function (result) {
-                    // update navbar
                     updateNav(to);
-    
-                    // update content
-                    $('div.body div')
-                      .not('#body-' + navs[here])
-                      .css('display', 'none');
-                    $('div.body')
-                      .append(result.data.content);
-    
-                    // update title
-                    $('div.page-header h1')
-                      .not('h1#subject-' + navs[here])
-                      .css('display', 'none');
-
-                    $('div.page-header')
-                      .append('<h1 id="subject-'
-                        + navs[here] + '">'
-                        + result.data.subject
-                        + '</h1>');
+                    updateContent(to, navs[here], result.data.content);
+                    updateTitle(to, navs[here], result.data.subject);
                 },
                 error: function (result) {
                     console.error('Error:', result);
                 }
             });
         } else {
-            // update navbar
             updateNav(to);
-
-            // update content
-            $('div.body div')
-              .not('#body-' + navs[here])
-              .css('display', 'none');
-            $('div.body div#body-' + to)
-              .css('display', 'block');
-
-            // update title
-            $('div.page-header h1')
-              .not('#subject-' + navs[here])
-              .css('display', 'none');
-            $('div.page-header h1#subject-' + to)
-              .css('display', 'block');
+            updateContent(to, navs[here]);
+            updateTitle(to, navs[here]);
 
             // if 'Home' subject
             if ($('div.page-header h1#subject-' + to).length === 0) {
@@ -131,6 +101,33 @@
         }
     }
 
+    function updateContent(to, from, content) {
+        $('div.body div')
+          .not('#body-' + from)
+          .css('display', 'none');
+        if (content) {
+            $('div.body')
+              .append(content);
+        } else {
+            $('div.body div#body-' + to)
+              .css('display', 'block');
+        }
+    }
+    function updateTitle(to, from, title) {
+        $('div.page-header h1')
+          .not('h1#subject-' + from)
+          .css('display', 'none');
+        if (title) {
+            $('div.page-header')
+              .append('<h1 id="subject-'
+                + from + '">'
+                + title
+                + '</h1>');
+        } else {
+            $('div.page-header h1#subject-' + to)
+              .css('display', 'block');
+        }
+    }
     function updateNav(to) {
         $('ul.nav li')
             .siblings('.active')
