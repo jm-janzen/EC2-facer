@@ -83,9 +83,6 @@
                 success: function (result) {
                     updateContent(to, navs[here], result.data.content);
                     updateTitle(to, navs[here], result.data.subject);
-                },
-                error: function (result) {
-                    console.error('Error:', result);
                 }
             });
         } else {
