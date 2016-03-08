@@ -77,8 +77,10 @@
         if ($('div.body div#body-' + to).length === 0) {
             $.ajax({
                 url: '/body/' + to,
-                success: function (result) {
+                beforeSend: function () {
                     updateNav(to);
+                },
+                success: function (result) {
                     updateContent(to, navs[here], result.data.content);
                     updateTitle(to, navs[here], result.data.subject);
                 },
