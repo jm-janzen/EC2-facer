@@ -12,7 +12,7 @@ var http    = require('http')
  */
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(express.static(__dirname + '/'));
+app.use(express.static(__dirname + '/views'));
 
 /*
  * get git log file
@@ -43,7 +43,7 @@ for (var i = 0; i < files.length; i++) {
  */
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: false,
+        debug: true,
         subject: 'Hello',
         content: bodies['home']
     });
