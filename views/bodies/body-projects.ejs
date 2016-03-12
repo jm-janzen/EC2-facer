@@ -18,28 +18,66 @@
             </li>
             <li><strong>Facer Server</strong> (2016 - present)</li>
                 <ul>
-                    <li>AWS - EC2
+                    <li><a href="https://github.com/jm-janzen/EC2-facer/blob/master/facer.js">Source code</a>
                     </li>
-                    <li>NodeJS server
+                    <li>Written primarily according to the <a href="http://www.ecma-international.org/ecma-262/5.1">ECMAScript 5.1</a> JavaScript
+                        specification, with particular attention to the Strict Variant (enhanced error checking, non-silent failure).
                     </li>
-                    <li>NAT Filtering (iptables)
+                    <li>Hosted on Amazon Web Services' <a href="https://aws.amazon.com/ec2/">
+                        Elastic Compute Cloud</a> service.
                     </li>
-                    <li>Githooks
+                    <li>Githooks (you'll have to do your own research - this is my secret sauce!). :)
                     </li>
                 </ul>
             <li><strong>Ubuntu Server</strong></li>
                 <ul>
+                    <li>NAT Filtering, using Debian <a href="http://packages.ubuntu.com/trusty/iptables">iptables</a> package, to route HTTP requests
+                        from port 80 to Facer server on alternate port.  Details
+                        <a href="https://github.com/jm-janzen/notes/blob/master/iptables.txt">here</a>.
+                    </li>
                     <li>Tools
+                        <ul>
+                            <li>GNU screen package
+                            </li>
+                            <li>git
+                            </li>
+                            <li>vim
+                            </li>
+                            <li>bash, tcsh, zsh
+                            </li>
+                            <li>forever monitor node-package
+                            </li>
+                        </ul>
                     </li>
                     <li>Customization
+                        <ul>
+                            <li>GNU screen enhancements
+                            </li>
+                            <li>vim-mode
+                            </li>
+                            <li>git aliases
+                            </li>
+                            <li>other aliases
+                            </li>
+                            <li>dot files
+                            </li>
+                        </ul>
                     </li>
                     <li>Scripts
+                        <ul>
+                            <li>convenience scripts
+                            </li>
+                            <li>Githook scripts
+                            </li>
+                            <li>upstart scripts
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
             <li><strong>Navpad CLI</strong> (2015 - present)</li>
                 <ul>
-                    <li>My idea for a very simple, interactive command line tool (work-in-progress sources
+                    <li>My idea for an interactive command line tool (work-in-progress sources
                         <a href="https://github.com/jm-janzen/navpad">here</a>).  The idea is to make a dead-simple Linux file system
                         navigator, which would be primarily driven via a keyboard's numpad.  Even at this very early stage, it succeeds
                         in this; however, there are bugs to squash (for instance, the Bash version, doesn't like files containing spaces)
