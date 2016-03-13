@@ -79,12 +79,15 @@ app.get('/getGitLog', function (req, res) {
     logConnection(req);
 });
 app.get('/notes', function (req, res) {
-    var noteTitles = Object.keys(notes);
-    //res.status(200).json(noteTitles);
     res.render('notes.ejs', {
-        titles: noteTitles,
+        subject: 'Some Notes',
+        titles: Object.keys(notes),
         notes: notes
     });
+});
+app.get('/notes:which', function (req, res) {
+    var which = req.params.which;
+    res.render(notes[which]);
 });
 
 /*
