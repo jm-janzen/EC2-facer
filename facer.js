@@ -75,6 +75,9 @@ app.get('/getGitLog', function (req, res) {
     res.send(gitText);
     logConnection(req);
 });
+app.get('/notes', function (req, res) {
+    res.send('TODO');
+});
 
 /*
  * listen on port 6060 (rerouted from 80)
