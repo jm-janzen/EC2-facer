@@ -39,7 +39,7 @@ for (var i = 0; i < files.length; i++) {
     bodies[files[i]] = fs.readFileSync('./views/bodies/body-' + files[i] + '.ejs', 'utf8');
 }
 
-var notes = require('./face-notes.js').Notes('./views/notes');
+var notes = require('./face-read.js').Notes('./views/notes');
 
 /*
  * HTTP request routers
