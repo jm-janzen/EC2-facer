@@ -1,0 +1,12 @@
+<% include sections/head %>
+
+<div> <% 
+    var i = 0;
+    for (note in notes) { %>
+        <a id='<%=titles[i]%>' > <%= note %> </a> <br/>
+        <p style='background-color:black;'>
+        <%- notes[note].replace(/\n/g, "<br/>"); %> </p>
+    <% i++
+    } %>
+</div>
+

@@ -1,5 +1,6 @@
 'use strict';
 
+
 var http    = require('http')
   , fs      = require('fs')
   , PORT    = 6060
@@ -37,6 +38,8 @@ var files = [ 'about', 'projects', 'contact', 'home'];
 for (var i = 0; i < files.length; i++) {
     bodies[files[i]] = fs.readFileSync('./views/bodies/body-' + files[i] + '.ejs', 'utf8');
 }
+
+var notes = require('./face-notes.js').Notes('./views/notes');
 
 /*
  * HTTP request routers
@@ -76,7 +79,12 @@ app.get('/getGitLog', function (req, res) {
     logConnection(req);
 });
 app.get('/notes', function (req, res) {
-    res.send('TODO');
+    var noteTitles = Object.keys(notes);
+    //res.status(200).json(noteTitles);
+    res.render('notes.ejs', {
+        titles: noteTitles,
+        notes: notes
+    });
 });
 
 /*
