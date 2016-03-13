@@ -1,0 +1,3 @@
+[submodule "views/notes"]
+	path = views/notes
+	url = https://github.com/jm-janzen/notes.git

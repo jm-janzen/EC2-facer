@@ -1,0 +1,18 @@
+<% include sections/head %>
+
+<% include sections/navbar %>
+
+<div class="hero-unit">
+    <div class='page-header'>
+        <h1> <%= subject %> </h1>
+    </div>
+    <div class='body'>
+        <% var i = 0;
+        for (note in notes) { %>
+            <a target='_blank' href='notes/<%=titles[i]%>' > <%= note %> </a> <br/>
+        <% i++
+        } %>
+    </div>
+</div>
+
+<% include sections/foot %>
