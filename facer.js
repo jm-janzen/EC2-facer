@@ -38,7 +38,12 @@ for (var i = 0; i < files.length; i++) {
     bodies[files[i]] = fs.readFileSync('./views/bodies/body-' + files[i] + '.ejs', 'utf8');
 }
 
-var notes = require('./face-read.js').Notes('./views/notes');
+/*
+ * read some submodules' files for later serving
+ */
+var reader  = require('./face-read.js');
+var notes   = reader.read('./views/notes', 'txt');
+var scripts = reader.read('./views/scripts', 'sh');
 
 /*
  * HTTP request routers
@@ -50,7 +55,7 @@ app.all('/*', function (req, res, next) {
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: false,
+        debug: true,
         subject: 'Hello',
         content: bodies['home']
     });
@@ -87,6 +92,19 @@ app.get('/notes/:which', function (req, res) {
     res.render(notes[which] || null);
 });
 
+app.get('/scripts', function (req, res) {
+    res.render('scripts.ejs', {
+        subject: 'Some Scripts',
+        titles: Object.keys(scripts),
+        scripts: scripts
+    });
+});
+app.get('/scripts/:which', function (req, res) {
+    console.log(which);
+    var which = req.params.which;
+    res.render(scripts[which] || null);
+});
+
 /*
  * listen on port 6060 (rerouted from 80)
  */
@@ -97,12 +115,10 @@ app.listen(PORT, function () {
 function logConnection(req) {
     // if not my public IP
     console.log(req.path);
-    if (req.ip !== '67.193.120.178') {
-        var info = util.format('[%s]: %s,\t%s,\t%s',
-          new Date().toUTCString(), req.method, req.ip, req.path);
-        info += '\n';
-        fs.appendFile('logs/connect.log', info, function (error) {
-            if (error) throw new Error(("Error writing to file: " + error));
-        });
-    }
+    var info = util.format('[%s]: %s,\t%s,\t%s',
+      new Date().toUTCString(), req.method, req.ip, req.path);
+    info += '\n';
+    fs.appendFile('logs/connect.log', info, function (error) {
+        if (error) throw new Error(("Error writing to file: " + error));
+    });
 }

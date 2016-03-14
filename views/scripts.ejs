@@ -1,0 +1,18 @@
+<% include sections/head %>
+
+<% include sections/navbar %>
+
+<div class="hero-unit">
+    <div class='page-header'>
+        <h1> <%= subject %> </h1>
+    </div>
+    <div class='body'>
+        <% var i = 0;
+        for (script in scripts) { %>
+            <a target='_blank' href='scripts/<%=titles[i]%>' > <%= script %> </a> <br/>
+        <% i++
+        } %>
+    </div>
+</div>
+
+<% include sections/foot %>

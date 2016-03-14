@@ -7,13 +7,13 @@ var fs = require('fs');
  * return array of files and their
  * textual content
  */
-exports.Notes = function (path) {
+exports.read = function (path, type) {
 
     var textFiles = {};
-    var regex = new RegExp(/\.txt/);
+    var regex = new RegExp("\\." + type);
 
     fs.readdir(path, function (error, files) {
-        if (error) throw new Error("Error reading notes");
+        if (error) throw new Error("Error reading from path: " + path);
 
         for (var file in files) {
             if (files[file].match(regex)) {
