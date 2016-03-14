@@ -1,6 +1,5 @@
 'use strict';
 
-
 var http    = require('http')
   , fs      = require('fs')
   , PORT    = 6060
@@ -44,15 +43,17 @@ var notes = require('./face-read.js').Notes('./views/notes');
 /*
  * HTTP request routers
  */
+app.all('/*', function (req, res, next) {
+    logConnection(req);
+    next();
+});
+
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: true,
+        debug: false,
         subject: 'Hello',
         content: bodies['home']
     });
-}, function (req, res, next) {
-    logConnection(req);
-    next();
 });
 app.get('/body/:which', function (req, res, next) {
     var which = req.params.which;
@@ -63,12 +64,8 @@ app.get('/body/:which', function (req, res, next) {
             content: bodies[which]
         }
     });
-}, function (req, res) {
-    logConnection(req);
-    next();
 });
 app.get('/robots.txt', function (req, res) {
-    logConnection(req);
     res.type('text/plain');
     res.send('#011000100110010101100101011100000010'
     + '00000110001001101111011011110111000000100001'
@@ -76,8 +73,8 @@ app.get('/robots.txt', function (req, res) {
 });
 app.get('/getGitLog', function (req, res) {
     res.send(gitText);
-    logConnection(req);
 });
+/* XXX unsecure TODO fix
 app.get('/notes', function (req, res) {
     res.render('notes.ejs', {
         subject: 'Some Notes',
@@ -85,10 +82,12 @@ app.get('/notes', function (req, res) {
         notes: notes
     });
 });
-app.get('/notes:which', function (req, res) {
+app.get('/notes/:which', function (req, res) {
+    console.log(which);
     var which = req.params.which;
-    res.render(notes[which]);
+    res.render(notes[which] || null);
 });
+*/
 
 /*
  * listen on port 6060 (rerouted from 80)
@@ -99,6 +98,7 @@ app.listen(PORT, function () {
 
 function logConnection(req) {
     // if not my public IP
+    console.log(req.path);
     if (req.ip !== '67.193.120.178') {
         var info = util.format('[%s]: %s,\t%s,\t%s',
           new Date().toUTCString(), req.method, req.ip, req.path);
