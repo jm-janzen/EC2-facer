@@ -39,6 +39,18 @@ for (var i = 0; i < files.length; i++) {
 }
 
 /*
+ * valid urls
+ */
+var valid = [ /^\/$/
+    , /^\/favicon\.ico$/
+    , /^\/body\/[a-z]+$/
+    , /^\/robots\.txt$/
+    , /^\/getGitLog$/
+    , /^\/notes\/[a-zA-Z]*$/
+    , /^\/scripts\/[a-zA-Z]*$/
+];
+
+/*
  * read some submodules' files for later serving
  */
 var reader  = require('./face-read.js');
@@ -49,13 +61,21 @@ var scripts = reader.read('./views/scripts', 'sh');
  * HTTP request routers
  */
 app.all('/*', function (req, res, next) {
-    logConnection(req);
-    next();
+    res.setHeader('X-Powered-By', 'Maisy');
+    if (validConnection(req.path)) {
+        next();
+    } else {
+        console.error('Invalid path "%s"', req.path);
+        // TODO add proper 404 page
+        res.end('404');
+    }
+    logConnection(req); // TODO log fact of bad conn attempt
+
 });
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: true,
+        debug: false,
         subject: 'Hello',
         content: bodies['home']
     });
@@ -112,11 +132,23 @@ app.listen(PORT, function () {
 	console.log('facer listening on port', PORT);
 });
 
+function validConnection(path) {
+    var result = false;
+    valid.forEach(function (r) {
+        if (path.match(r) !== null) {
+            result = true;
+        }
+    });
+    return result;
+}
+
 function logConnection(req) {
-    // if not my public IP
+
     console.log(req.path);
-    var info = util.format('[%s]: %s,\t%s,\t%s',
-      new Date().toUTCString(), req.method, req.ip, req.path);
+
+    var now = new Date();
+    var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s',
+      now.toDateString(), now.toLocaleTimeString(),  req.method, req.ip, req.path);
     info += '\n';
     fs.appendFile('logs/connect.log', info, function (error) {
         if (error) throw new Error(("Error writing to file: " + error));
