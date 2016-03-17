@@ -21,7 +21,8 @@ exports.read = function (path, type, callback) {
                   + '/'
                   + files[file]
                   , 'utf8');
-            }        }
+            }
+        }
         if (typeof callback === 'function') {
             callback(textFiles);
         }
