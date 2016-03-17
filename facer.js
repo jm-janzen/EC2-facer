@@ -69,7 +69,12 @@ reader.read('./views/scripts', 'sh', function (result) {
 app.all('/*', function (req, res, next) {
     res.setHeader('X-Powered-By', 'Maisy');
     if (validConnection(req.path)) {
-        next();
+        // TODO put this in validConnection
+        if (req.method !== 'GET') {
+            res.end('403');
+        } else {
+            next();
+        }
     } else {
         console.error('Invalid path "%s"', req.path);
         // TODO add proper 404 page
@@ -105,6 +110,7 @@ app.get('/robots.txt', function (req, res) {
 app.get('/getGitLog', function (req, res) {
     res.send(gitText);
 });
+
 app.get('/notes', function (req, res) {
     res.render('notes.ejs', {
         subject: 'Some Notes',
@@ -159,4 +165,7 @@ function logConnection(req) {
     fs.appendFile('logs/connect.log', info, function (error) {
         if (error) throw new Error(("Error writing to file: " + error));
     });
+    if (typeof req.path === 'undefined') {
+        console.error('undefined ip', req.route);
+    }
 }
