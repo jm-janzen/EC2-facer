@@ -17,10 +17,11 @@ exports.read = function (path, type, callback) {
 
         for (var file = 0; file < files.length; file++) {
             if (files[file].match(regex)) {
-                textFiles[files[file]] = fs.readFileSync(path
-                  + '/'
-                  + files[file]
-                  , 'utf8');
+                textFiles[files[file]
+                  .slice(0, (type.length * -1) - 1 )] = fs.readFileSync(path
+                    + '/'
+                    + files[file]
+                    , 'utf8');
             }
         }
         if (typeof callback === 'function') {
