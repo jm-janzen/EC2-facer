@@ -54,8 +54,14 @@ var valid = [ /^\/$/
  * read some submodules' files for later serving
  */
 var reader  = require('./face-read.js');
-var notes   = reader.read('./views/notes', 'txt');
-var scripts = reader.read('./views/scripts', 'sh');
+var notes = {};
+reader.read('./views/notes', 'txt', function (result) {
+    notes = result;
+});
+var scripts = {};
+reader.read('./views/scripts', 'sh', function (result) {
+    scripts = result;
+});
 
 /*
  * HTTP request routers
