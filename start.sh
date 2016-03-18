@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
-./node_modules/forever/bin/forever facer.js --minUptime 1000 --spinSleepTime 1000
+forever -w --minUptime 1000 --spinSleepTime 1000 facer.js
 
