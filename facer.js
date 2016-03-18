@@ -119,9 +119,9 @@ app.get('/notes', function (req, res) {
     });
 });
 app.get('/notes/:which', function (req, res) {
-    console.log(which);
     var which = req.params.which;
-    res.render(notes[which] || null);
+    res.setHeader('Content-Type', 'text/plain');
+    res.send((notes[which]) || '404');
 });
 
 app.get('/scripts', function (req, res) {
