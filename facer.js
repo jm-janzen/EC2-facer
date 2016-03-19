@@ -132,9 +132,9 @@ app.get('/scripts', function (req, res) {
     });
 });
 app.get('/scripts/:which', function (req, res) {
-    console.log(which);
     var which = req.params.which;
-    res.render(scripts[which] || null);
+    res.setHeader('Content-Type', 'text/plain');
+    res.send((scripts[which]) || '404');
 });
 
 /*

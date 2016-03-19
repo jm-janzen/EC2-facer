@@ -45,18 +45,19 @@ ul {
 }
 
 /*
- * notes styles
+ * notes & script  styles
  */
 
-#note-container {
+#note-container, #script-container {
     background: rgba(16, 29, 35, 8);
     border: 1px solid darkgray;
     width: 80%;
     float: right;
     padding: 10px;
+    white-space: pre-wrap;
 }
 
-#note-list {
+#note-list, #script-list {
     width: 20%;
     float: right;
 }

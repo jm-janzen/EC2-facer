@@ -30,11 +30,11 @@ $('a').click(function (event) {
         url: '/notes/' + which,
         complete: function (result) {
             result = JSON.stringify(result.responseText)
-              .replace(/\\n/g, '<br/>')
-              .replace(/\\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
+              .replace(/\\n/g, '\n')
+              .replace(/\\t/g, '\t')
               .slice(1, -1);
             $('div#note-container')
-              .html(result);
+              .text(result);
         }
     });
 });

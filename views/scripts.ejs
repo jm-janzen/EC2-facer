@@ -6,13 +6,39 @@
     <div class='page-header'>
         <h1> <%= subject %> </h1>
     </div>
-    <div class='body'>
+    <div class='body' style='overflow:hidden;'>
+        <div id='script-container'>
+            // script text goes here
+        </div>
+        <div id='script-list'>
         <% var i = 0;
         for (script in scripts) { %>
-            <a target='_blank' href='scripts/<%=titles[i]%>' > <%= script %> </a> <br/>
+            <a id='<%=titles[i]%>' href='/scripts/#'><%= script %></a> <br/>
         <% i++
         } %>
+        </div>
     </div>
 </div>
+
+<script type='text/javascript'>
+
+$('a').click(function (event) {
+    var which = $(this)
+      .attr('id');
+    console.log(which);
+    $.ajax({
+        url: '/scripts/' + which,
+        complete: function (result) {
+            result = JSON.stringify(result.responseText)
+              .replace(/\\n/g, '\n')
+              .replace(/\\t/g, '\t')
+              .slice(1, -1);
+            $('div#script-container')
+              .text(result);
+        }
+    });
+});
+
+</script>
 
 <% include sections/foot %>
