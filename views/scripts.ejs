@@ -5,16 +5,16 @@
 <div class="hero-unit">
     <div class='page-header'>
         <h1> <%= subject %> </h1>
-        <a href='https://github.com/jm-janzen/notes'>github link</a>
+        <a href='https://github.com/jm-janzen/scripts'>github link</a>
     </div>
     <div class='body' style='overflow:hidden;'>
-        <pre id='note-container'>
-            // note text goes here
+        <pre id='script-container'>
+            // script text goes here
         </pre>
-        <div id='note-list'>
+        <div id='script-list'>
         <% var i = 0;
-        for (note in notes) { %>
-            <a id='<%=titles[i]%>' href='/notes/#'><%= note %></a> <br/>
+        for (script in scripts) { %>
+            <a id='<%=titles[i]%>' href='/scripts/#'><%= script %></a> <br/>
         <% i++
         } %>
         </div>
@@ -30,24 +30,24 @@ $('a').click(function (event) {
       .attr('id');
     console.log(which);
     $.ajax({
-        url: '/notes/' + which,
-
-        // load file content to screen:
+        url: '/scripts/' + which,
         complete: function (result) {
+
+            // load file content to screen:
             result = JSON.stringify(result.responseText)
               .replace(/\\n/g, '\n')
               .replace(/\\t/g, '\t')
               .slice(1, -1);
-            $('pre#note-container')
+            $('pre#script-container')
               .text(result);
 
             // add/update download link:
             $('div.body a#dl-link')
               .remove();
             $('pre#dl-link-container')
-              .append('<a id="dl-link" href="/notes/'
-                + which + '.txt">download '
-                + which + '.txt</a>')
+              .append('<a id="dl-link" href="/scripts/'
+                + which + '.sh">download '
+                + which + '.sh</a>')
               .show();
         }
     });

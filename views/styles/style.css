@@ -1,3 +1,7 @@
+/*
+ * common styles
+ */
+
 body {
     background: linear-gradient(to left, #101d23, #89b3c7, #101d23);
     font-family: Verdana, Courier, monospace;
@@ -35,9 +39,34 @@ ul {
 }
 
 .hero-unit {
-    background: black;
-    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 1%;
 }
 
+/*
+ * notes & script  styles
+ */
+
+#note-container, #script-container {
+    background: rgba(16, 29, 35, 8);
+    color: rgba(116, 129, 135, 1);
+    border: 1px solid darkgray;
+    width: 80%;
+    float: right;
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+#note-list, #script-list {
+    width: 20%;
+    float: right;
+}
+
+#dl-link-container {
+    background-color: lightblue;
+    height: 3em;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+}
