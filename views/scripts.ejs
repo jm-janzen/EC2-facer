@@ -5,6 +5,7 @@
 <div class="hero-unit">
     <div class='page-header'>
         <h1> <%= subject %> </h1>
+        <a href='https://github.com/jm-janzen/scripts'>github link</a>
     </div>
     <div class='body' style='overflow:hidden;'>
         <pre id='script-container'>
@@ -17,6 +18,8 @@
         <% i++
         } %>
         </div>
+        <pre id='dl-link-container' style='display:none;'>
+        </pre>
     </div>
 </div>
 
@@ -29,12 +32,23 @@ $('a').click(function (event) {
     $.ajax({
         url: '/scripts/' + which,
         complete: function (result) {
+
+            // load file content to screen:
             result = JSON.stringify(result.responseText)
               .replace(/\\n/g, '\n')
               .replace(/\\t/g, '\t')
               .slice(1, -1);
             $('pre#script-container')
               .text(result);
+
+            // add/update download link:
+            $('div.body a#dl-link')
+              .remove();
+            $('pre#dl-link-container')
+              .append('<a id="dl-link" href="/scripts/'
+                + which + '.sh">download '
+                + which + '.sh</a>')
+              .show();
         }
     });
 });
