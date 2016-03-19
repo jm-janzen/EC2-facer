@@ -7,9 +7,9 @@
         <h1> <%= subject %> </h1>
     </div>
     <div class='body' style='overflow:hidden;'>
-        <div id='note-container'>
+        <pre id='note-container'>
             // note text goes here
-        </div>
+        </pre>
         <div id='note-list'>
         <% var i = 0;
         for (note in notes) { %>
@@ -33,7 +33,7 @@ $('a').click(function (event) {
               .replace(/\\n/g, '\n')
               .replace(/\\t/g, '\t')
               .slice(1, -1);
-            $('div#note-container')
+            $('pre#note-container')
               .text(result);
         }
     });

@@ -50,6 +50,7 @@ ul {
 
 #note-container, #script-container {
     background: rgba(16, 29, 35, 8);
+    color: rgba(116, 129, 135, 1);
     border: 1px solid darkgray;
     width: 80%;
     float: right;

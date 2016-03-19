@@ -7,9 +7,9 @@
         <h1> <%= subject %> </h1>
     </div>
     <div class='body' style='overflow:hidden;'>
-        <div id='script-container'>
+        <pre id='script-container'>
             // script text goes here
-        </div>
+        </pre>
         <div id='script-list'>
         <% var i = 0;
         for (script in scripts) { %>
@@ -33,7 +33,7 @@ $('a').click(function (event) {
               .replace(/\\n/g, '\n')
               .replace(/\\t/g, '\t')
               .slice(1, -1);
-            $('div#script-container')
+            $('pre#script-container')
               .text(result);
         }
     });
