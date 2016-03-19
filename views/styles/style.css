@@ -1,3 +1,7 @@
+/*
+ * common styles
+ */
+
 body {
     background: linear-gradient(to left, #101d23, #89b3c7, #101d23);
     font-family: Verdana, Courier, monospace;
@@ -35,9 +39,24 @@ ul {
 }
 
 .hero-unit {
-    background: black;
-    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 1%;
 }
 
+/*
+ * notes styles
+ */
+
+#note-container {
+    background: rgba(16, 29, 35, 8);
+    border: 1px solid darkgray;
+    width: 80%;
+    float: right;
+    padding: 10px;
+}
+
+#note-list {
+    width: 20%;
+    float: right;
+}

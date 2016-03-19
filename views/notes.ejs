@@ -7,13 +7,13 @@
         <h1> <%= subject %> </h1>
     </div>
     <div class='body' style='overflow:hidden;'>
-        <div id='note-container' style='width:80%;float:right;opacity:1;background-color:darkgreen;'>
+        <div id='note-container'>
             // note text goes here
         </div>
-        <div style='width:20%;float:right;'>
+        <div id='note-list'>
         <% var i = 0;
         for (note in notes) { %>
-            <a id='<%=titles[i]%>'><%= note %></a> <br/>
+            <a id='<%=titles[i]%>' href='/notes/#'><%= note %></a> <br/>
         <% i++
         } %>
         </div>
