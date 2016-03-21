@@ -37,6 +37,7 @@ $('a').click(function (event) {
             result = JSON.stringify(result.responseText)
               .replace(/\\n/g, '\n')
               .replace(/\\t/g, '\t')
+              .replace(/\\\"/g, '"')
               .slice(1, -1);
             $('pre#script-container')
               .text(result);
