@@ -3,7 +3,7 @@
 var fs = require('fs');
 
 /*
- * read *.txt files at given `path',
+ * read *.<type> files at given `path',
  * return array of files and their
  * textual content
  */
