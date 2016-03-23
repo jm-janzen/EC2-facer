@@ -7,9 +7,21 @@ var fs = require('fs');
  * return array of files and their
  * textual content
  */
-exports.read = function (path, type, callback) {
+exports.read = function (path, opts, callback) {
 
     var textFiles = {};
+    var type = null;
+
+    for (var o in opts) {
+        switch (o) {
+            case 'extension':
+                type = opts[o];
+                break;
+            default:
+                throw new Error("Unsupported option(s) `%s'", opts);
+        }
+    }
+
     var regex = new RegExp("\\." + type);
     var typeLen = (type.length * -1) -1;
 

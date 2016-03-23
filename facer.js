@@ -55,11 +55,11 @@ var valid = [ /^\/$/
  */
 var reader  = require('./face-read.js');
 var notes = {};
-reader.read('./views/notes', 'txt', function (result) {
+reader.read('./views/notes', { extension: 'txt' }, function (result) {
     notes = result;
 });
 var scripts = {};
-reader.read('./views/scripts', 'sh', function (result) {
+reader.read('./views/scripts', { extension: 'sh' }, function (result) {
     scripts = result;
 });
 
