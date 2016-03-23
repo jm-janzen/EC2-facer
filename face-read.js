@@ -20,7 +20,7 @@ exports.read = function (path, type, callback) {
             if (files[file].match(regex)) {
                 // load textFiles with content
                 textFiles[files[file]
-                  .slice(0, typeLen] = fs.readFileSync(path
+                  .slice(0, typeLen)] = fs.readFileSync(path
                     + '/'
                     + files[file]
                     , 'utf8');
