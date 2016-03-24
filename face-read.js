@@ -7,10 +7,10 @@ var fs = require('fs');
  * return array of files and their
  * textual content
  */
-exports.read = function (path, opts, callback) {
+exports.read = function (path, callback, opts) {
 
     var textFiles = {};
-    var type = null;
+    var type = 'txt';
 
     for (var o in opts) {
         switch (o) {
