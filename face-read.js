@@ -3,9 +3,13 @@
 var fs = require('fs');
 
 /*
- * read *.<type> files at given `path',
+ * read *.<{ extension: '<type>'}> files at given `path',
  * return array of files and their
  * textual content
+ * OR:
+ *  if 'stats' specified in opts,
+ *  just return information on the
+ *  these files
  */
 exports.read = function (path, callback, opts) {
 
@@ -27,6 +31,12 @@ exports.read = function (path, callback, opts) {
                     + '/'
                     + files[file]
                     , 'utf8');
+                if (options.stats) {
+                  textFiles[files[file]
+                    .slice(0, typeLen)] = fs.lstatSync(path
+                      + '/'
+                      + files[file]);
+                }
             }
         }
         if (typeof callback === 'function') {
@@ -47,6 +57,9 @@ exports.read = function (path, callback, opts) {
                 switch (o) {
                     case 'extension':
                         options.extension = String(opts[o]);
+                        break;
+                    case 'stats':
+                        options.stats = true;
                         break;
                 }
             }
