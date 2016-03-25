@@ -55,13 +55,13 @@ var valid = [ /^\/$/
  */
 var reader  = require('./face-read.js');
 var notes = {};
-reader.read('./views/notes', 'txt', function (result) {
+reader.read('./views/notes', function (result) {
     notes = result;
 });
 var scripts = {};
-reader.read('./views/scripts', 'sh', function (result) {
+reader.read('./views/scripts', function (result) {
     scripts = result;
-});
+}, { extension: 'sh' });
 
 /*
  * HTTP request routers
