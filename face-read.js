@@ -10,17 +10,7 @@ var fs = require('fs');
 exports.read = function (path, callback, opts) {
 
     var textFiles = {};
-    var type = 'txt';
-
-    for (var o in opts) {
-        switch (o) {
-            case 'extension':
-                type = opts[o];
-                break;
-            default:
-                throw new Error("Unsupported option(s) `%s'", opts);
-        }
-    }
+    var type = checkOptions(opts);
 
     var regex = new RegExp("\\." + type);
     var typeLen = (type.length * -1) -1;
@@ -42,4 +32,20 @@ exports.read = function (path, callback, opts) {
             callback(textFiles);
         }
     });
+
+    /*
+     * presently only checks for file extension option
+     */
+    function checkOptions(opts) {
+        if (typeof opts === 'object') {
+            for (var o in opts) {
+                switch (o) {
+                    case 'extension':
+                        return String(opts[o]);
+                        break;
+                }
+            }
+        }
+        return 'txt';
+    }
 }
