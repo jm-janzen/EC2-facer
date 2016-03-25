@@ -10,7 +10,8 @@ var fs = require('fs');
 exports.read = function (path, callback, opts) {
 
     var textFiles = {};
-    var type = checkOptions(opts);
+    var options   = checkOptions(opts);
+    var type      = options.extension;
 
     var regex = new RegExp("\\." + type);
     var typeLen = (type.length * -1) -1;
@@ -35,17 +36,23 @@ exports.read = function (path, callback, opts) {
 
     /*
      * presently only checks for file extension option
+     *  TODO add capability of parsing more options
      */
     function checkOptions(opts) {
-        if (typeof opts === 'object') {
+
+        var options = {};
+
+        if (typeof opts === 'object') { // parse opts for recognized options
             for (var o in opts) {
                 switch (o) {
                     case 'extension':
-                        return String(opts[o]);
+                        options.extension = String(opts[o]);
                         break;
                 }
             }
+        } else { // load with defaults
+            options.extension = 'txt';
         }
-        return 'txt';
+        return options;
     }
 }
