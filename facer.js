@@ -46,6 +46,7 @@ var valid = [ /^\/$/
     , /^\/body\/[a-z]+$/
     , /^\/robots\.txt$/
     , /^\/getGitLog$/
+    , /^\/comp74\/[a-zA-z0-9]/
     , /^\/notes\/[a-zA-Z]*$/
     , /^\/scripts\/[a-zA-Z]*$/
 ];
@@ -62,6 +63,28 @@ var scripts = {};
 reader.read('./views/scripts', function (result) {
     scripts = result;
 }, { extension: 'sh' });
+
+/*
+ * XXX COMP74-branch related
+ *   get nullstudent's public repositories for later serving
+ */
+var Repo = require('./CPA2016/repo.js')(process.argv[2]);
+var list = [];
+Repo.list(function (r) {
+    list = r;
+});
+app.get('/comp74', function (req, res, next) {
+    res.render('comp74.ejs', {
+        subject: 'COMP74 - Github API',
+    });
+});
+app.get('/comp74/git-list', function (req, res, next) {
+    res.status(200).json({
+        data: {
+            content: list // XXX unused
+        }
+    });
+});
 
 /*
  * HTTP request routers

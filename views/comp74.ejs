@@ -1,0 +1,58 @@
+<% include sections/head %>
+
+<div class='hero-unit'>
+    <div class='page-header'>
+        <h1> <%= subject %> </h1>
+    </div>
+    <div class='body'>
+        <table id='repo-table' width='100%'>
+            <tr>
+                <th> name </th>
+                <th> desc </th>
+                <th> add  </th>
+                <th> rm   </th>
+                <th> link </th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+$(document).ready(function () {
+    $.ajax({
+        url: '/comp74/git-list',
+        type: 'GET',
+        beforeSend: function () {
+            console.log('Getting list of Github repositories');
+        },
+        success: function (result) {
+            var parsed = result.data.content;
+            var row = '';
+            for (var item in parsed) {
+               var name = parsed[item].name;
+               var desc = parsed[item].description
+               var url  = parsed[item].html_url;
+               var btnAdd = '<button class="btn-success btn-add" id="add-"' + name + '">+</button>';
+               var btnRm  = '<button class="btn-danger btn-rm" id="rm-"' + name + '">-</button>';
+               var btnUrl = '<button class="btn-info btn-url" id="url-"' + name + '">'
+                 + '<a target="_blank" href="' + url + '">?</a></button>';
+               row += '<tr><td>' + name
+                 + '</td><td>' +  desc
+                 + '</td><td>' + btnAdd
+                 + '</td><td>' + btnRm
+                 + '</td><td>' + btnUrl
+                 + '</td></tr>';
+            }
+            $('table#repo-table tr:last').after(row);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+
+    });
+});
+
+</script>
+
+<% include sections/foot %>
