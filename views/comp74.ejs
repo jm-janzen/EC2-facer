@@ -26,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-xs-2">
-                <input id='git-name' type="text" class="form-control" placeholder='Name'>
+                <input id='git-name' type="text" class="form-control" placeholder='Name' required>
             </div>
             <div class="col-xs-5">
                 <input id='git-desc' type="text" class="form-control" placeholder='Description'>
@@ -82,11 +82,24 @@ function getRepositoryList() {
     });
 }
 function createRepository() {
-    // TODO
     var name = $('input#git-name').val();
     var desc = $('input#git-desc').val();
-    console.log('createRepository', name, desc);
     $('button#createRepo').attr('disabled', 'disabled'); // TODO when done request, re-enable
+    $.ajax({
+        url: '/comp74/git-create',
+        data: { createMe:
+            { name: 'alpha',
+              desc: 'beta'
+            }
+        },
+        dataType: 'json',
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
 }
 function deleteRepository(name) {
     $.ajax({
@@ -94,9 +107,10 @@ function deleteRepository(name) {
         data: { deleteMe: name },
         dataType: 'json',
         success: function (result) {
-            console.log(result)
+            updateStatus('alert-success', 'Success: ', 'Deleted repository');
         },
         error: function (error) {
+            updateStatus('alert-danger', 'Failure: ', 'Could not delete this repository (' + '/* TODO provide reason */' + ')');
             console.error(error);
         }
     });

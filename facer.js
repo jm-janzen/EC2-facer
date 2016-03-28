@@ -87,8 +87,11 @@ app.get('/comp74/git-list', function (req, res, next) {
     });
 });
 app.get('/comp74/git-create', function (req, res, next) {
+    var createName = req.query.createMe.name || 'null';
+    var createDesc = req.query.createMe.desc || 'null';
     Repo.create('abc', 'alphabet', function (data) {
         console.log(data);
+        // TODO return success or err
     });
     res.status(200).json({
         data: {
