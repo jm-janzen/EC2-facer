@@ -41,7 +41,6 @@ function getRepositoryList() {
             console.log('Getting list of Github repositories');
         },
         success: function (result) {
-            updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
             var parsed = result.data.content;
             var row = '';
             for (var item in parsed) {
@@ -60,9 +59,11 @@ function getRepositoryList() {
                  + '</td></tr>';
             }
             $('table#repo-table tr:last').after(row);
+            updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
         },
         error: function (error) {
             console.error(error);
+            updateStatus('alert-danger', 'Error: ', 'Could not retrieve list of repositories');
         }
 
     });
