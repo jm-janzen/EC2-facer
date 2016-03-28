@@ -4,21 +4,35 @@
     <div class='page-header'>
         <h1> <%= subject %> </h1>
     </div>
-    <div class='body'>
+    <div class='container'>
         <div class='alert alert-info' style='text-align:center;'>
             <strong style='display:inline-block;'>INFO: </strong>
             <p style='display:inline-block;'>Status updates appear here</p>
         </div>
-        <table id='repo-table' width='100%'>
-            <tr>
-                <th> name </th>
-                <th> desc </th>
-                <th> add  </th>
-                <th> rm   </th>
-                <th> link </th>
-            </tr>
-        </table>
+        <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
+            <table id='repo-table' width='100%'>
+                <tr>
+                    <th> name </th>
+                    <th> desc </th>
+                    <th> rm   </th>
+                    <th> link </th>
+                </tr>
+            </table>
+        </dive>
     </div>
+    <form action='#'>
+        <div class='page-header'>
+            <h3>Create a New Repository</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                <input type="text" class="form-control" placeholder='Name'>
+            </div>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" placeholder='Description'>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script type='text/javascript'>
@@ -53,7 +67,6 @@ function getRepositoryList() {
                  + '<a target="_blank" href="' + url + '">?</a></button>';
                row += '<tr><td>' + name
                  + '</td><td>' +  desc
-                 + '</td><td>' + btnAdd
                  + '</td><td>' + btnRm
                  + '</td><td>' + btnUrl
                  + '</td></tr>';
