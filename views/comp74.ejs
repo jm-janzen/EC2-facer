@@ -20,6 +20,16 @@
 <script type='text/javascript'>
 
 $(document).ready(function () {
+    getRepositoryList();
+
+    $(document.body).on('click', '[id^=rm-]', function (elem) {
+        console.log('Delete repo', elem.currentTarget.id);
+        var repo = elem.currentTarget.id.slice(3);
+        deleteRepository(repo);
+    });
+});
+
+function getRepositoryList() {
     $.ajax({
         url: '/comp74/git-list',
         type: 'GET',
@@ -33,9 +43,9 @@ $(document).ready(function () {
                var name = parsed[item].name;
                var desc = parsed[item].description
                var url  = parsed[item].html_url;
-               var btnAdd = '<button class="btn-success btn-add" id="add-"' + name + '">+</button>';
-               var btnRm  = '<button class="btn-danger btn-rm" id="rm-"' + name + '">-</button>';
-               var btnUrl = '<button class="btn-info btn-url" id="url-"' + name + '">'
+               var btnAdd = '<button class="btn-success btn-add" id="add-' + name + '">+</button>';
+               var btnRm  = '<button class="btn-danger btn-rm" id="rm-' + name + '">-</button>';
+               var btnUrl = '<button class="btn-info btn-url" id="url-' + name + '">'
                  + '<a target="_blank" href="' + url + '">?</a></button>';
                row += '<tr><td>' + name
                  + '</td><td>' +  desc
@@ -51,7 +61,23 @@ $(document).ready(function () {
         }
 
     });
-});
+}
+function createRepository(name, desc) {
+    // TODO
+}
+function deleteRepository(name) {
+    $.ajax({
+        url: '/comp74/git-rm',
+        data: { deleteMe: name },
+        dataType: 'json',
+        success: function (result) {
+            console.log(result)
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
 
 </script>
 

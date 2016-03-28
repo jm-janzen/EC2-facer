@@ -70,20 +70,61 @@ reader.read('./views/scripts', function (result) {
  */
 var Repo = require('./CPA2016/repo.js')(process.argv[2]);
 var list = [];
-Repo.list(function (r) {
-    list = r;
-});
 app.get('/comp74', function (req, res, next) {
     res.render('comp74.ejs', {
         subject: 'COMP74 - Github API',
     });
 });
 app.get('/comp74/git-list', function (req, res, next) {
+    console.log('fetching new git-list');
+    Repo.list(function (r) {
+        list = r;
+        res.status(200).json({
+            data: {
+                content: list
+            }
+        });
+    });
+});
+app.get('/comp74/git-create', function (req, res, next) {
+    Repo.create('abc', 'alphabet', function (data) {
+        console.log(data);
+    });
     res.status(200).json({
         data: {
-            content: list // XXX unused
+            status: 'Create feature not yet supported'
         }
     });
+});
+app.get('/comp74/git-rm', function (req, res, next) {
+    var deleteMe =  req.query.deleteMe;
+    var result = {};
+    console.log('attempting to delete %s ...', deleteMe);
+
+    if (deleteMe.match(/gq|CPA2016/)) {
+        result = {
+            status: 400,
+            message: 'Not allowed to delete this repository'
+        };
+        send(result);
+
+    } else if (! deleteMe.match(/gq|CPA2016/)) {
+        Repo.delete(deleteMe, function (response) {
+            result = response;
+            send(result);
+        });
+    } else {
+        res.end(501);
+    }
+
+    function send(result) {
+        res.status(result.status).json({ // XXX this firing before module done
+            data: {
+                status: result.status,
+                message: result.message
+            }
+        });
+    }
 });
 
 /*
