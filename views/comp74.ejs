@@ -1,13 +1,38 @@
 <% include sections/head %>
 
+<style type='text/css'>
+
+.gear {
+    animation: gear-spin 1s infinite;
+    font-size: 2em;
+}
+@keyframes gear-spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes gear-spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes gear-spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+</style>
+
 <div class='hero-unit'>
     <div class='page-header'>
         <h1> <%= subject %> </h1>
     </div>
     <div class='container'>
         <div class='alert alert-info' style='text-align:center;'>
-            <strong style='display:inline-block;'>INFO: </strong>
-            <p style='display:inline-block;'>Status updates appear here</p>
+            <span class='gear glyphicon glyphicon-cog' style='display:none;'></span>
+            <strong style='display:inline-block;'></strong>
+            <p style='display:inline-block;'></p>
         </div>
         <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
             <table id='repo-table' width='100%'>
@@ -53,6 +78,7 @@ function getRepositoryList() {
         type: 'GET',
         beforeSend: function () {
             console.log('Getting list of Github repositories');
+            startLoading();
         },
         success: function (result) {
             var parsed = result.data.content;
@@ -76,7 +102,11 @@ function getRepositoryList() {
         error: function (error) {
             console.error(error);
             updateStatus('alert-danger', 'Error: ', 'Could not retrieve list of repositories');
+        },
+        complete: function () {
+            doneLoading();
         }
+
 
     });
 }
@@ -122,11 +152,27 @@ function deleteRepository(name) {
 }
 function updateStatus(status, title, message) {
     console.log(status, title, message);
-    $('[class^="alert"]').attr('class', 'alert ' + status);
-    $('[class^="alert"] strong').text(title);
-    $('[class^="alert"] p').text(message);
-}
 
+    var a = $('[class^="alert"]');
+    var b = $('[class^="alert"] strong');
+    var c = $('[class^="alert"] p');
+
+    if (status === 'alert-info') {
+        b.css('display', 'none');
+        c.css('display', 'none');
+    } else {
+        a.attr('class', 'alert ' + status);
+        b.text(title).css('display', 'inherit');
+        c.text(message).css('display', 'inherit');
+    }
+}
+function startLoading() {
+    $('span.gear').css('display', 'block');
+    updateStatus('alert-info', '', '');
+}
+function doneLoading() {
+    $('span.gear').css('display', 'none');
+}
 </script>
 
 <% include sections/foot %>
