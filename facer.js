@@ -87,22 +87,34 @@ app.get('/comp74/git-list', function (req, res, next) {
     });
 });
 app.get('/comp74/git-create', function (req, res, next) {
+    console.log(req.query.createMe);
     var createName = req.query.createMe.name || 'null';
     var createDesc = req.query.createMe.desc || 'null';
-    Repo.create('abc', 'alphabet', function (data) {
-        console.log(data);
-        // TODO return success or err
-    });
-    res.status(200).json({
-        data: {
-            status: 'Create feature not yet supported'
+    var result = {};
+    Repo.create(createName, createDesc, function (response) {
+        console.log(response);
+        if (response.statusCode === 200) {
+            result = {
+                status: 200,
+                message: 'Created repository'
+            };
+        } else {
+            result = {
+                status: 400,
+                message: 'Could not create this repository'
+            };
         }
+
+        console.log('result==', result);
+        res.status(response.statusCode).json({
+            data: result
+        });
     });
 });
 app.get('/comp74/git-rm', function (req, res, next) {
+    console.log(req.query.deleteMe);
     var deleteMe =  req.query.deleteMe;
     var result = {};
-    console.log('attempting to delete %s ...', deleteMe);
 
     if (deleteMe.match(/gq|CPA2016/)) {
         result = {
@@ -121,7 +133,7 @@ app.get('/comp74/git-rm', function (req, res, next) {
     }
 
     function send(result) {
-        res.status(result.status).json({ // XXX this firing before module done
+        res.status(result.status).json({
             data: {
                 status: result.status,
                 message: result.message

@@ -42,7 +42,6 @@ $(document).ready(function () {
     getRepositoryList();
 
     $(document.body).on('click', '[id^=rm-]', function (elem) {
-        console.log('Delete repo', elem.currentTarget.id);
         var repo = elem.currentTarget.id.slice(3);
         deleteRepository(repo);
     });
@@ -87,17 +86,23 @@ function createRepository() {
     $('button#createRepo').attr('disabled', 'disabled'); // TODO when done request, re-enable
     $.ajax({
         url: '/comp74/git-create',
-        data: { createMe:
-            { name: 'alpha',
-              desc: 'beta'
+        data: {
+            createMe: {
+                name: name,
+                desc: desc
             }
         },
         dataType: 'json',
         success: function (result) {
-            console.log(result);
+            var result = result.data;
+            updateStatus('alert-success', 'Success: ', result.message);
         },
         error: function (error) {
-            console.error(error);
+            var error = error.responseJSON.data;
+            updateStatus('alert-danger', 'Failure: ', error.message);
+        },
+        complete: function () {
+            $('button#createRepo').removeAttr('disabled');
         }
     });
 }
@@ -125,3 +130,10 @@ function updateStatus(status, title, message) {
 </script>
 
 <% include sections/foot %>
+
+<!-- unregister keydown even handlers (interfering with data entry) -->
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $(document).off('keydown');
+    })
+</script>
