@@ -46,7 +46,6 @@ var valid = [ /^\/$/
     , /^\/body\/[a-z]+$/
     , /^\/robots\.txt$/
     , /^\/getGitLog$/
-    , /^\/comp74\/[a-zA-z0-9]/
     , /^\/notes\/[a-zA-Z]*$/
     , /^\/scripts\/[a-zA-Z]*$/
 ];
@@ -63,84 +62,6 @@ var scripts = {};
 reader.read('./views/scripts', function (result) {
     scripts = result;
 }, { extension: 'sh' });
-
-/*
- * XXX COMP74-branch related
- *   get nullstudent's public repositories for later serving
- */
-var Repo = require('./CPA2016/repo.js')(process.argv[2]);
-var list = [];
-app.get('/comp74', function (req, res, next) {
-    res.render('comp74.ejs', {
-        subject: 'COMP74 - Github API',
-    });
-});
-app.get('/comp74/git-list', function (req, res, next) {
-    console.log('fetching new git-list');
-    Repo.list(function (r) {
-        list = r;
-        res.status(200).json({
-            data: {
-                content: list
-            }
-        });
-    });
-});
-app.get('/comp74/git-create', function (req, res, next) {
-    console.log(req.query.createMe);
-    var createName = req.query.createMe.name || 'null';
-    var createDesc = req.query.createMe.desc || 'null';
-    var result = {};
-    Repo.create(createName, createDesc, function (response) {
-        console.log(response);
-        if (response.statusCode === 200) {
-            result = {
-                status: 200,
-                message: 'Created repository'
-            };
-        } else {
-            result = {
-                status: 400,
-                message: 'Could not create this repository'
-            };
-        }
-
-        console.log('result==', result);
-        res.status(response.statusCode).json({
-            data: result
-        });
-    });
-});
-app.get('/comp74/git-rm', function (req, res, next) {
-    console.log(req.query.deleteMe);
-    var deleteMe =  req.query.deleteMe;
-    var result = {};
-
-    if (deleteMe.match(/gq|CPA2016/)) {
-        result = {
-            status: 400,
-            message: 'Not allowed to delete this repository'
-        };
-        send(result);
-
-    } else if (! deleteMe.match(/gq|CPA2016/)) {
-        Repo.delete(deleteMe, function (response) {
-            result = response;
-            send(result);
-        });
-    } else {
-        res.end(501);
-    }
-
-    function send(result) {
-        res.status(result.status).json({
-            data: {
-                status: result.status,
-                message: result.message
-            }
-        });
-    }
-});
 
 /*
  * HTTP request routers
