@@ -65,6 +65,15 @@ reader.read('./views/scripts', function (result) {
 }, { extension: 'sh' });
 
 /*
+ * XXX COMP74-branch related
+ */
+app.get('/comp74', function (req, res, next) {
+    res.render('comp74.ejs', {
+        subject: 'COMP74 - Github API',
+    });
+});
+
+/*
  * HTTP request routers
  */
 app.all('/*', function (req, res, next) {
