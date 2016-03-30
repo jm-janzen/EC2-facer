@@ -7,3 +7,6 @@
 [submodule "CPA2016"]
 	path = CPA2016
 	url = https://github.com/nullportal/CPA2016.git
+[submodule "gq"]
+	path = gq
+	url = https://github.com/nullportal/gq.git
