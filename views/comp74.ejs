@@ -1,0 +1,185 @@
+<% include sections/head %>
+
+<style type='text/css'>
+
+.gear {
+    animation: gear-spin 1s infinite;
+    font-size: 2em;
+}
+@keyframes gear-spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes gear-spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes gear-spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+</style>
+
+<div class='hero-unit'>
+    <div class='page-header'>
+        <h1> <%= subject %> </h1>
+    </div>
+    <div class='container'>
+        <div class='alert alert-info' style='text-align:center;'>
+            <span class='gear glyphicon glyphicon-cog' style='display:none;'></span>
+            <strong style='display:inline-block;'></strong>
+            <p style='display:inline-block;'></p>
+        </div>
+        <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
+            <table id='repo-table' width='100%'>
+                <tr>
+                    <th> name </th>
+                    <th> desc </th>
+                    <th> rm   </th>
+                    <th> link </th>
+                </tr>
+            </table>
+        </dive>
+    </div>
+    <form action='javascript:createRepository()'>
+        <div class='page-header'>
+            <h3>Create a New Repository</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                <input id='git-name' type="text" class="form-control" placeholder='Name' required>
+            </div>
+            <div class="col-xs-5">
+                <input id='git-desc' type="text" class="form-control" placeholder='Description'>
+            </div>
+               <button type='submit' class='btn btn-success' id='createRepo'>Create</button>
+        </div>
+    </form>
+</div>
+
+<script type='text/javascript'>
+
+$(document).ready(function () {
+    getRepositoryList();
+
+    $(document.body).on('click', '[id^=rm-]', function (elem) {
+        var repo = elem.currentTarget.id.slice(3);
+        deleteRepository(repo);
+    });
+});
+
+function getRepositoryList() {
+    $.ajax({
+        url: '/comp74/git-list',
+        type: 'GET',
+        beforeSend: function () {
+            console.log('Getting list of Github repositories');
+            startLoading();
+        },
+        success: function (result) {
+            var parsed = result.data.content;
+            var row = '';
+            for (var item in parsed) {
+               var name = parsed[item].name;
+               var desc = parsed[item].description
+               var url  = parsed[item].html_url;
+               var btnRm  = '<button class="btn-danger btn-rm" id="rm-' + name + '">-</button>';
+               var btnUrl = '<button class="btn-info btn-url" id="url-' + name + '">'
+                 + '<a target="_blank" href="' + url + '">?</a></button>';
+               row += '<tr><td>' + name
+                 + '</td><td>' +  desc
+                 + '</td><td>' + btnRm
+                 + '</td><td>' + btnUrl
+                 + '</td></tr>';
+            }
+            $('table#repo-table tr:last').after(row);
+            updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
+        },
+        error: function (error) {
+            console.error(error);
+            updateStatus('alert-danger', 'Error: ', 'Could not retrieve list of repositories');
+        },
+        complete: function () {
+            doneLoading();
+        }
+
+
+    });
+}
+function createRepository() {
+    var name = $('input#git-name').val();
+    var desc = $('input#git-desc').val();
+    $('button#createRepo').attr('disabled', 'disabled'); // TODO when done request, re-enable
+    $.ajax({
+        url: '/comp74/git-create',
+        data: {
+            createMe: {
+                name: name,
+                desc: desc
+            }
+        },
+        dataType: 'json',
+        success: function (result) {
+            var result = result.data;
+            updateStatus('alert-success', 'Success: ', result.message);
+        },
+        error: function (error) {
+            var error = error.responseJSON.data;
+            updateStatus('alert-danger', 'Failure: ', error.message);
+        },
+        complete: function () {
+            $('button#createRepo').removeAttr('disabled');
+        }
+    });
+}
+function deleteRepository(name) {
+    $.ajax({
+        url: '/comp74/git-rm',
+        data: { deleteMe: name },
+        dataType: 'json',
+        success: function (result) {
+            updateStatus('alert-success', 'Success: ', 'Deleted repository');
+        },
+        error: function (error) {
+            updateStatus('alert-danger', 'Failure: ', 'Could not delete this repository (' + '/* TODO provide reason */' + ')');
+            console.error(error);
+        }
+    });
+}
+function updateStatus(status, title, message) {
+    console.log(status, title, message);
+
+    var a = $('[class^="alert"]');
+    var b = $('[class^="alert"] strong');
+    var c = $('[class^="alert"] p');
+
+    if (status === 'alert-info') {
+        b.css('display', 'none');
+        c.css('display', 'none');
+    } else {
+        a.attr('class', 'alert ' + status);
+        b.text(title).css('display', 'inherit');
+        c.text(message).css('display', 'inherit');
+    }
+}
+function startLoading() {
+    $('span.gear').css('display', 'block');
+    updateStatus('alert-info', '', '');
+}
+function doneLoading() {
+    $('span.gear').css('display', 'none');
+}
+</script>
+
+<% include sections/foot %>
+
+<!-- unregister keydown even handlers (interfering with data entry) -->
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $(document).off('keydown');
+    })
+</script>
