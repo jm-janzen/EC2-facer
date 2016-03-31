@@ -74,6 +74,7 @@ app.get('/comp74', function (req, res, next) {
     res.render('comp74.ejs', {
         subject: 'COMP74 - Github API',
     });
+    logConnection(req);
 });
 
 /*
@@ -88,6 +89,7 @@ app.get('/comp74/:shell', function (req, res, next) {
         var status = data.error ? 404 : 200;
         res.status(status).json(data);
     });
+    logConnection(req);
 });
 
 /*
