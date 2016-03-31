@@ -98,14 +98,14 @@ function parseRepositories(repos) {
     //    console.log('oink', set[6]);
     //    i++;
     //}, this);
-    for (var i = 0; i < repos.length; i++) { // XXX this doesn't work either :S
+    repos.forEach(function (repo) {
         var parsed = {};
         parsed.score= i;
-        parsed.name = repos[i].full_name;
-        parsed.url  = repos[i].svn_url;
-        parsed.desc = repos[i].description;
-        set[i] = parsed;
-    }
+        parsed.name = repo.full_name;
+        parsed.url  = repo.svn_url;
+        parsed.desc = repo.description;
+        set.push(parsed);
+    });
     return set;
 }
 
