@@ -51,39 +51,41 @@
 
 $(document).ready(function () {
 
-    $.ajax({
-        url: '/comp74/zsh',
-        beforeSend: function () {
-            startLoading();
-        },
-        success: function (result) {
-            console.log('Success!', result);
-            var parsed = parseRepositories(result.body);
-            console.log(parsed);
+    function getTopRuncoms(elem) {
+        $.ajax({
+            url: '/comp74/zsh',
+            beforeSend: function () {
+                startLoading();
+            },
+            success: function (result) {
+                console.log('Success!', result);
+                var parsed = parseRepositories(result.body);
+                console.log(parsed);
 
-            for (var item in parsed) {
-                var name = parsed[item].name;
-                var url  = parsed[item].url;
-                var desc = parsed[item].desc;
-                var score= parsed[item].score;
+                for (var item in parsed) {
+                    var name = parsed[item].name;
+                    var url  = parsed[item].url;
+                    var desc = parsed[item].desc;
+                    var score= parsed[item].score;
 
-                row = '<tr><td>' + name
-                  + '</td><td>' + desc
-                  + '</td><td>' + score
-                  + '</td><td><a href="' + url + '">' + url + '</a>'
-                  + '</td></tr>';
+                    row = '<tr><td>' + name
+                    + '</td><td>' + desc
+                    + '</td><td>' + score
+                    + '</td><td><a href="' + url + '">' + url + '</a>'
+                    + '</td></tr>';
 
-                $('table#repo-table tr:last').after(row);
+                    $('table#repo-table tr:last').after(row);
+                }
+                updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
+            },
+            error: function (error) {
+                console.error('Error!', error);
+            },
+            complete: function () {
+                doneLoading();
             }
-            updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
-        },
-        error: function (error) {
-            console.error('Error!', error);
-        },
-        complete: function () {
-            doneLoading();
-        }
-    });
+        });
+    }
 });
 
 function parseRepositories(repos) {
