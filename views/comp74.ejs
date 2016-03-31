@@ -89,15 +89,6 @@ $(document).ready(function () {
 function parseRepositories(repos) {
     var i = 0;
     var set    = [];
-    //repos.forEach(function (r) {
-    //    console.log('count', i);
-    //    parsed.name = r.full_name;
-    //    parsed.url  = r.svn_url;
-    //    parsed.desc = r.description;
-    //    set[i] = parsed;
-    //    console.log('oink', set[6]);
-    //    i++;
-    //}, this);
     repos.forEach(function (repo) {
         var parsed = {};
         parsed.score= i;
