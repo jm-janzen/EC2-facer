@@ -58,7 +58,6 @@ $(document).ready(function () {
         },
         success: function (result) {
             console.log('Success!', result);
-            var row    = '';
             var parsed = parseRepositories(result.body);
             console.log(parsed);
 
@@ -66,16 +65,17 @@ $(document).ready(function () {
                 var name = parsed[item].name;
                 var url  = parsed[item].url;
                 var desc = parsed[item].desc;
+                var score= parsed[item].score;
 
-                row += '<tr><td>' + name
+                row = '<tr><td>' + name
                   + '</td><td>' + desc
-                  + '</td><td>' + 'TODO'
+                  + '</td><td>' + score
                   + '</td><td><a href="' + url + '">' + url + '</a>'
                   + '</td></tr>';
 
                 $('table#repo-table tr:last').after(row);
-                updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
             }
+            updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
         },
         error: function (error) {
             console.error('Error!', error);
@@ -88,7 +88,6 @@ $(document).ready(function () {
 
 function parseRepositories(repos) {
     var i = 0;
-    var parsed = {};
     var set    = [];
     //repos.forEach(function (r) {
     //    console.log('count', i);
@@ -100,13 +99,13 @@ function parseRepositories(repos) {
     //    i++;
     //}, this);
     for (var i = 0; i < repos.length; i++) { // XXX this doesn't work either :S
+        var parsed = {};
+        parsed.score= i;
         parsed.name = repos[i].full_name;
         parsed.url  = repos[i].svn_url;
         parsed.desc = repos[i].description;
         set[i] = parsed;
-
     }
-    console.log('woof', set[6]);
     return set;
 }
 
