@@ -67,9 +67,26 @@ reader.read('./views/scripts', function (result) {
 /*
  * XXX COMP74-branch related
  */
+
+var gq = require('./gq/gq.js');
+
 app.get('/comp74', function (req, res, next) {
     res.render('comp74.ejs', {
         subject: 'COMP74 - Github API',
+    });
+});
+
+/*
+ * TODO
+ *   Build name and desc field here before sending
+ */
+app.get('/comp74/:shell', function (req, res, next) {
+    var shell = req.params.shell;
+    shell = shell === 'zsh' ? shell : 'zsh'; // XXX only support zsh for now
+
+    gq.topRuncoms('zsh', function (data) {
+        var status = data.error ? 404 : 200;
+        res.status(status).json(data);
     });
 });
 

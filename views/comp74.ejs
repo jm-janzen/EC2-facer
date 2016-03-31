@@ -41,6 +41,21 @@
 
 $(document).ready(function () {
 
+    $.ajax({
+        url: '/comp74/zsh',
+        beforeSend: function () {
+            startLoading();
+        },
+        success: function (result) {
+            console.log('Success!', result);
+        },
+        error: function (error) {
+            console.error('Error!', error);
+        },
+        complete: function () {
+            doneLoading();
+        }
+    });
 });
 
 function updateStatus(status, title, message) {
