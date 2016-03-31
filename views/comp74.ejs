@@ -35,6 +35,16 @@
             <p style='display:inline-block;'></p>
         </div>
     </div>
+    <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
+        <table id='repo-table' width='100%'>
+            <tr>
+                <th> name </th>
+                <th> desc </th>
+                <th> score</th>
+                <th> link </th>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <script type='text/javascript'>
@@ -48,6 +58,24 @@ $(document).ready(function () {
         },
         success: function (result) {
             console.log('Success!', result);
+            var row    = '';
+            var parsed = parseRepositories(result.body);
+            console.log(parsed);
+
+            for (var item in parsed) {
+                var name = parsed[item].name;
+                var url  = parsed[item].url;
+                var desc = parsed[item].desc;
+
+                row += '<tr><td>' + name
+                  + '</td><td>' + desc
+                  + '</td><td>' + 'TODO'
+                  + '</td><td><a href="' + url + '">' + url + '</a>'
+                  + '</td></tr>';
+
+                $('table#repo-table tr:last').after(row);
+                updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
+            }
         },
         error: function (error) {
             console.error('Error!', error);
@@ -57,6 +85,30 @@ $(document).ready(function () {
         }
     });
 });
+
+function parseRepositories(repos) {
+    var i = 0;
+    var parsed = {};
+    var set    = [];
+    //repos.forEach(function (r) {
+    //    console.log('count', i);
+    //    parsed.name = r.full_name;
+    //    parsed.url  = r.svn_url;
+    //    parsed.desc = r.description;
+    //    set[i] = parsed;
+    //    console.log('oink', set[6]);
+    //    i++;
+    //}, this);
+    for (var i = 0; i < repos.length; i++) { // XXX this doesn't work either :S
+        parsed.name = repos[i].full_name;
+        parsed.url  = repos[i].svn_url;
+        parsed.desc = repos[i].description;
+        set[i] = parsed;
+
+    }
+    console.log('woof', set[6]);
+    return set;
+}
 
 function updateStatus(status, title, message) {
     console.log(status, title, message);
