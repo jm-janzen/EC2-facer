@@ -25,9 +25,17 @@
 </style>
 
 <div class='hero-unit'>
+<form action='javascript:getRuncoms()'>
     <div class='page-header'>
-        <h1> <%= subject %> </h1>
+        <h1> What's Your Favourite Shell? </h1>
+        <div class="row">
+            <div class="col-xs-2">
+                <input id='shell-name' type="text" class="form-control" placeholder='Shell' required>
+            </div>
+            <button type='submit' class='btn btn-success' id='getRuncoms'>Search</button>
+        </div>
     </div>
+</form>
     <div class='container'>
         <div class='alert alert-info' style='text-align:center;'>
             <span class='gear glyphicon glyphicon-cog' style='display:none;'></span>
