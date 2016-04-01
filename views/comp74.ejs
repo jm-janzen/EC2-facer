@@ -25,20 +25,20 @@
 </style>
 
 <div class='hero-unit'>
-<form action='javascript:getRuncoms()'>
+<form id='getRuncoms' action='javascript:getRuncoms()'>
     <div class='page-header'>
         <h1> What's Your Favourite Shell? </h1>
         <div class="row">
             <div class="col-xs-2">
                 <input id='shell-name' type="text" class="form-control" placeholder='Shell' required>
             </div>
-            <button type='submit' class='btn btn-success' id='getRuncoms'>Search</button>
+            <button type='submit' class='btn btn-success'>Search</button>
         </div>
     </div>
 </form>
     <div class='container'>
-        <div class='alert alert-info' style='text-align:center;'>
-            <span class='gear glyphicon glyphicon-cog' style='display:none;'></span>
+        <div class='alert alert-info' style='text-align:center;display:none;'>
+            <span class='gear glyphicon glyphicon-cog' ></span>
             <strong style='display:inline-block;'></strong>
             <p style='display:inline-block;'></p>
         </div>
@@ -57,18 +57,19 @@
 
 <script type='text/javascript'>
 
-$(document).ready(function () {
-
-    function getTopRuncoms(elem) {
+    function getRuncoms() {
+        var shell = $('input#shell-name').val();
         $.ajax({
-            url: '/comp74/zsh',
+            url: '/comp74/' + shell,
             beforeSend: function () {
                 startLoading();
+
+                // clear all but header row
+                $('table#repo-table').find('tr:gt(0)').remove();
             },
             success: function (result) {
                 console.log('Success!', result);
                 var parsed = parseRepositories(result.body);
-                console.log(parsed);
 
                 for (var item in parsed) {
                     var name = parsed[item].name;
@@ -94,7 +95,6 @@ $(document).ready(function () {
             }
         });
     }
-});
 
 function parseRepositories(repos) {
     var set    = [];
@@ -126,11 +126,14 @@ function updateStatus(status, title, message) {
     }
 }
 function startLoading() {
+    $('table#repo-table').css('display', 'none');
+    $('div.alert').css('display', 'block');
     $('span.gear').css('display', 'block');
     updateStatus('alert-info', '', '');
 }
 function doneLoading() {
     $('span.gear').css('display', 'none');
+    $('table#repo-table').css('display', 'block');
 }
 </script>
 

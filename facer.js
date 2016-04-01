@@ -83,9 +83,8 @@ app.get('/comp74', function (req, res, next) {
  */
 app.get('/comp74/:shell', function (req, res, next) {
     var shell = req.params.shell;
-    shell = shell === 'zsh' ? shell : 'zsh'; // XXX only support zsh for now
 
-    gq.topRuncoms('zsh', function (data) {
+    gq.topRuncoms(shell, function (data) {
         var status = data.error ? 404 : 200;
         res.status(status).json(data);
     });
