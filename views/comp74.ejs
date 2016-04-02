@@ -30,7 +30,13 @@
         <h1> What's Your Favourite Shell? </h1>
         <div class="row">
             <div class="col-xs-2">
-                <input id='shell-name' type="text" class="form-control" placeholder='Shell' required>
+                <input id='shell-name'
+                  type="text"
+                  class="form-control"
+                  pattern='[^\.\\/ ]+'
+                  placeholder='Shell'
+                  title='Alphanumeric only, length 3-10, inclusive.'
+                  required />
             </div>
             <button type='submit' class='btn btn-success'>Search</button>
         </div>
@@ -44,7 +50,7 @@
         </div>
     </div>
     <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
-        <table id='repo-table' width='100%' style='display:none;'>
+        <table id='repo-table' class='table' style='display:none;'>
             <tr>
                 <th> NAME </th>
                 <td> &nbsp</td>
@@ -114,7 +120,9 @@
                   , result.message);
             },
             error: function (error) {
-                console.error('Error!', error);
+                updateStatus('alert-danger'
+                  , 'bad request'
+                  , error.responseText);
             },
             complete: function () {
                 doneLoading();
@@ -159,7 +167,7 @@ function startLoading() {
 }
 function doneLoading() {
     $('span.gear').css('display', 'none');
-    $('table#repo-table').css('display', 'block');
+    $('table#repo-table').css('display', 'table');
 }
 </script>
 
