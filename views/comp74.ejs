@@ -96,7 +96,22 @@
 
                     $('table#repo-table tr:last').after(row);
                 }
-                updateStatus('alert-success', 'Success: ', 'Retrieved list of repositories');
+
+                /*
+                 * Even "successful" queries can contain 0 results,
+                 * so we react to this.
+                 */
+                var alert;
+                switch (result.summary) {
+                    case 'Failure': alert = 'alert-warning'; break;
+                    case 'Success': alert = 'alert-success'; break;
+                    default:
+                        alert = 'alert-info';
+                }
+
+                updateStatus(alert
+                  , result.summary
+                  , result.message);
             },
             error: function (error) {
                 console.error('Error!', error);
