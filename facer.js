@@ -84,10 +84,15 @@ app.get('/comp74', function (req, res, next) {
 app.get('/comp74/:shell', function (req, res, next) {
     var shell = req.params.shell;
 
-    gq.topRuncoms(shell, function (data) {
-        var status = data.error ? 404 : 200;
-        res.status(status).json(data);
-    });
+    try {
+        gq.topRuncoms(shell, function (data) {
+            var status = data.error ? 404 : 200;
+            res.status(status).json(data);
+        });
+    } catch (error) {
+        console.log('gq module threw an error "%s"!', error);
+        // TODO return bad request status to end user
+    }
     logConnection(req);
 });
 
