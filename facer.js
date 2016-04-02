@@ -92,6 +92,7 @@ app.get('/comp74/:shell', function (req, res, next) {
     } catch (error) {
         console.log('gq module threw an error "%s"!', error);
         // TODO return bad request status to end user
+        res.status(403).end(error.toString());
     }
     logConnection(req);
 });
