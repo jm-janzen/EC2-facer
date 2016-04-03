@@ -33,7 +33,7 @@
                 <input id='shell-name'
                   type="text"
                   class="form-control"
-                  pattern='[^\.\\/ ]+'
+                  pattern='[a-zA-Z]*'
                   placeholder='Shell'
                   title='Alphanumeric only, length 3-10, inclusive.'
                   autofocus
@@ -126,9 +126,15 @@
                   , error.responseText);
             },
             complete: function (result) {
-                doneLoading(JSON
-                  .parse(result.responseText)
-                  .summary);
+
+                // if unparsable, just assume error
+                try {
+                    doneLoading(JSON
+                      .parse(result.responseText)
+                      .summary);
+                } catch (error) {
+                    doneLoading();
+                }
             }
         });
     }
