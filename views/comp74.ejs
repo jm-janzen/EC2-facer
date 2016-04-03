@@ -125,8 +125,10 @@
                   , 'bad request'
                   , error.responseText);
             },
-            complete: function () {
-                doneLoading();
+            complete: function (result) {
+                doneLoading(JSON
+                  .parse(result.responseText)
+                  .summary);
             }
         });
     }
@@ -166,9 +168,13 @@ function startLoading() {
     $('span.gear').css('display', 'block');
     updateStatus('alert-info', '', '');
 }
-function doneLoading() {
+function doneLoading(status) {
     $('span.gear').css('display', 'none');
-    $('table#repo-table').css('display', 'table');
+
+    // Only display table if there are results to show
+    if (status === 'Success') {
+        $('table#repo-table').css('display', 'table');
+    }
 }
 </script>
 
