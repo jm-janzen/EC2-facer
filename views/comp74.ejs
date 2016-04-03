@@ -71,23 +71,23 @@ th .glyphicon:hover {
     <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
         <table id='repo-table' class='table' style='display:none;'>
             <tr>
-                <th>
+                <th nowrap>
                     NAME
                     <span class='glyphicon glyphicon-question-sign'
                       title='User/Repository; click to navigate to repository containing the runcom' />
                 </th>
                 <td> &nbsp</td>
-                <th> DESC
+                <th nowrap> DESC
                     <span class='glyphicon glyphicon-question-sign'
                       title='Description of the respository as denoted on Github' />
                 </th>
                 <td> &nbsp</td>
-                <th> SCORE
+                <th nowrap> SCORE
                     <span class='glyphicon glyphicon-question-sign'
                       title='Score given by Github based on a variety of ranking factors' />
                 </th>
                 <td> &nbsp</td>
-                <th> FILE
+                <th nowrap> FILE
                     <span class='glyphicon glyphicon-question-sign'
                       title='Direct link to runcom file' />
                 </th>
@@ -201,12 +201,14 @@ function updateStatus(status, title, message) {
     }
 }
 function startLoading() {
+    $('button.btn').prop('disabled', true);
     $('table#repo-table').css('display', 'none');
     $('div.alert').css('display', 'block');
     $('span.gear').css('display', 'block');
     updateStatus('alert-info', '', '');
 }
 function doneLoading(status) {
+    $('button.btn').prop('disabled', false);
     $('span.gear').css('display', 'none');
 
     // Only display table if there are results to show
