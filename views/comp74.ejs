@@ -6,6 +6,14 @@
     animation: gear-spin 1s infinite;
     font-size: 2em;
 }
+
+.page-header h2 {
+    text-align: center;
+}
+.page-header p {
+    margin: auto;
+    width: 50%;
+}
 @keyframes gear-spin {
     from {
         transform: rotate(0deg);
@@ -27,14 +35,20 @@
 <div class='hero-unit'>
 <form id='getRuncoms' action='javascript:getRuncoms()'>
     <div class='page-header'>
-        <h1> What's Your Favourite Shell? </h1>
+        <h2> What's Your Favourite Linux Shell? </h2>
+        <p>
+            Enter the name of your favourite linux shell, and this web app will return
+            the top 10 most popular Github repositories containing a runcom (rc) file
+            matching your shell.
+        </p>
+
         <div class="row">
             <div class="col-xs-2">
                 <input id='shell-name'
                   type="text"
                   class="form-control"
                   pattern='[a-zA-Z]*'
-                  placeholder='Shell'
+                  placeholder='bash, zsh, etc...'
                   title='Alphanumeric only, length 3-10, inclusive.'
                   autofocus
                   required />
@@ -59,7 +73,9 @@
                 <td> &nbsp</td>
                 <th> SCORE</th>
                 <td> &nbsp</td>
-                <th> LINK </th>
+                <th> REPO </th>
+                <td> &nbsp</td>
+                <th> FILE </th>
             </tr>
         </table>
     </div>
@@ -99,6 +115,8 @@
                     + '</td><td>' + score
                     + '</td>&nbsp<td>'
                     + '</td><td><a href="' + url + '">' + url + '</a>'
+                    + '</td>&nbsp<td>'
+                    + '</td><td><a href="' + url + '">' + url + '</a>' // TODO file URL, if available
                     + '</td></tr>';
 
                     $('table#repo-table tr:last').after(row);
