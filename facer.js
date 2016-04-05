@@ -77,10 +77,6 @@ app.get('/comp74', function (req, res, next) {
     logConnection(req);
 });
 
-/*
- * TODO
- *   Build name and desc field here before sending
- */
 app.get('/comp74/:shell', function (req, res, next) {
     var shell = req.params.shell;
 
@@ -91,7 +87,6 @@ app.get('/comp74/:shell', function (req, res, next) {
         });
     } catch (error) {
         console.log('gq module threw an error "%s"!', error);
-        // TODO return bad request status to end user
         res.status(400).end(error.toString());
     }
     logConnection(req);
