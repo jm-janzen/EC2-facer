@@ -47,7 +47,7 @@ var valid = [ /^\/$/
     , /^\/robots\.txt$/
     , /^\/getGitLog$/
     , /^\/notes\/[a-zA-Z]*$/
-    , /^\/scripts\/[a-zA-Z]*$/
+    , /^\/scripts\/[a-zA-Z-]*$/
 ];
 
 /*
