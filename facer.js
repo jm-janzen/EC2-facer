@@ -42,11 +42,11 @@ for (var i = 0; i < files.length; i++) {
  * valid urls
  */
 var valid = [ /^\/$/
-    , /^\/favicon\.ico$/
     , /^\/body\/[a-z]+$/
-    , /^\/robots\.txt$/
+    , /^\/favicon\.ico$/
     , /^\/getGitLog$/
     , /^\/notes\/[a-zA-Z]*$/
+    , /^\/robots\.txt$/
     , /^\/scripts\/[a-zA-Z-]*$/
 ];
 
