@@ -81,7 +81,7 @@ app.get('/comp74/:shell', function (req, res, next) {
     var shell = req.params.shell;
 
     try {
-        gq.topRuncoms(shell, function (data) { // XXX sometimes gets 'null' body arrs
+        gq.topRuncoms(shell, function (data) {
             /*XXX*/console.log('Client received data!', data);
             var status = data.error ? 404 : 200;
             res.status(status).json(data);
