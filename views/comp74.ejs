@@ -10,7 +10,7 @@
 .page-header h2 {
     text-align: center;
 }
-.page-header p {
+.page-header p, ul, h3 {
     margin: auto;
     width: 50%;
 }
@@ -45,10 +45,23 @@ th .glyphicon:hover {
             the top 10 most popular Github repositories containing a runcom (rc) file
             matching your shell.
         </p>
+        <br />
+        <h3> Source code </h3>
+        <ul>
+            <li> Server
+                <a href='https://github.com/jm-janzen/EC2-facer/blob/comp74/facer.js#L67-L93'>facer.js (WIP)</a>
+            </li>
+            <li> API consumer
+                <a href='https://github.com/nullportal/gq/blob/runcom/gq.js'>gq.js (WIP)</a>
+            </li>
 
-        <div class="row">
+        </ul>
+
+    </div>
+        <div class="row" style='width:100%;'>
             <div class="col-xs-2">
                 <input id='shell-name'
+                  style='width:100%;'
                   type="text"
                   class="form-control"
                   pattern='[a-zA-Z]*'
@@ -59,7 +72,6 @@ th .glyphicon:hover {
             </div>
             <button type='submit' class='btn btn-success'>Search</button>
         </div>
-    </div>
 </form>
     <div class='container'>
         <div class='alert alert-info' style='text-align:center;display:none;'>
@@ -110,31 +122,44 @@ th .glyphicon:hover {
             },
             success: function (result) {
                 console.log('Success!', result);
-                var parsed = parseRepositories(result.body);
+                try {
+                    var parsed = parseRepositories(result.body);
 
-                for (var item in parsed) {
-                    var name = parsed[item].name;
-                    var url  = parsed[item].url;
-                    var desc = parsed[item].desc;
-                    var score= parsed[item].score;
+                    for (var item in parsed) {
+                        var name = parsed[item].name;
+                        var url  = parsed[item].url;
+                        var desc = parsed[item].desc;
+                        var score= parsed[item].score;
+                        var rc   = parsed[item].runcom;
+                        var stub = '';
 
-                    if (item % 2) {
-                        row = '<tr>'
-                    } else {
-                        row = '<tr style="background-color:rgba(0,0,0,0.6)">';
+                        if (rc == 'NO MATCH') {
+                            stub = 'N/A';
+                        } else {
+                            stub = '<a target="_blank" href="'
+                              + (url + '/blob/master/' + rc)
+                              + '">' + rc
+                              + '</a>';
+                        }
+
+                        if (item % 2) {
+                            row = '<tr>'
+                        } else {
+                            row = '<tr style="background-color:rgba(0,0,0,0.6)">';
+                        }
+                        row += '<td><a target="_blank" href="'
+                          + url + '">' + name + '</a>'
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + desc
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + score
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + stub
+                          + '</td></tr>';
+
+                        $('table#repo-table tr:last').after(row);
                     }
-                    row += '<td><a target="_blank" href="'
-                    + url + '">' + name + '</a>'
-                    + '</td>&nbsp<td>'
-                    + '</td><td>' + desc
-                    + '</td>&nbsp<td>'
-                    + '</td><td>' + score
-                    + '</td>&nbsp<td>'
-                    + '</td><td><a href="' + url + '">' + 'TODO' + '</a>' // TODO file URL, if available
-                    + '</td></tr>';
-
-                    $('table#repo-table tr:last').after(row);
-                }
+                } catch (e) { /* XXX I'm not proud of this ... */ }
 
                 /*
                  * Even "successful" queries can contain 0 results,
@@ -179,6 +204,7 @@ function parseRepositories(repos) {
         parsed.name = repo.full_name;
         parsed.url  = repo.svn_url;
         parsed.desc = repo.description;
+        parsed.runcom = repo.runcom;
         set.push(parsed);
     });
     return set;
