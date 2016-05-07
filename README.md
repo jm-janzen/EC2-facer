@@ -3,7 +3,7 @@ AWS EC2 server files backup mainly
 
 ## setup instructions for the novice ubuntu server admin
 ```css
-git clone https://github.com/jm-janzen/EC2-facer.git    /* clone this repository to your server */
+git clone https://github.com/jm-janzen/EC2-facer        /* clone this repository to your server */
 cd EC2-facer                                            /* change directory to cloned repository */
 npm install                                             /* install the dependencies facer requires */
 nodejs facer.js                                         /* run, then open browser at the specified port,
