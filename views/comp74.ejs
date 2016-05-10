@@ -1,0 +1,262 @@
+<% include sections/head %>
+
+<style type='text/css'>
+
+.gear {
+    animation: gear-spin 1s infinite;
+    font-size: 2em;
+}
+
+.page-header h2 {
+    text-align: center;
+}
+.page-header p, ul, h3 {
+    margin: auto;
+    width: 50%;
+}
+
+th .glyphicon:hover {
+    color: yellow;
+}
+@keyframes gear-spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes gear-spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes gear-spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+</style>
+
+<div class='hero-unit'>
+<form id='getRuncoms' action='javascript:getRuncoms()'>
+    <div class='page-header'>
+        <h2> What's Your Favourite Linux Shell? </h2>
+        <p>
+            Enter the name of your favourite linux shell, and this web app will return
+            the top 10 most popular Github repositories containing a runcom (rc) file
+            matching your shell.
+        </p>
+        <br />
+        <h3> Source code </h3>
+        <ul>
+            <li> View
+                <a href='https://github.com/jm-janzen/EC2-facer/blob/comp74/views/comp74.ejs'>comp74.ejs</a>
+            </li>
+            <li> Server
+                <a href='https://github.com/jm-janzen/EC2-facer/blob/comp74/facer.js#L67-L93'>facer.js</a>
+            </li>
+            <li> API consumer
+                <a href='https://github.com/nullportal/gq/blob/master/gq.js'>gq.js</a>
+            </li>
+            <li> Commit history for View & Server
+                <a href='https://github.com/jm-janzen/EC2-facer/commits/comp74'>facer repository, comp74 branch</a>
+            </li>
+            <li> Commit history for API consumer
+                <a href='https://github.com/nullportal/gq/commits/master'>gq ("git query") repository, master branch</a>
+            </li>
+        </ul>
+
+    </div>
+        <div class="row" style='width:100%;'>
+            <div class="col-xs-2">
+                <input id='shell-name'
+                  style='width:100%;'
+                  type="text"
+                  class="form-control"
+                  pattern='[a-zA-Z]*'
+                  placeholder='bash, zsh, etc...'
+                  title='Alphanumeric only, length 3-10, inclusive.'
+                  autofocus
+                  required />
+            </div>
+            <button type='submit' class='btn btn-success'>Search</button>
+        </div>
+</form>
+    <div class='container'>
+        <div class='alert alert-info' style='text-align:center;display:none;'>
+            <span class='gear glyphicon glyphicon-cog' ></span>
+            <strong style='display:inline-block;'></strong>
+            <p style='display:inline-block;'></p>
+        </div>
+    </div>
+    <div  style='background-color:rgba(0,0,0,0.5);padding:5%;'>
+        <table id='repo-table' class='table' style='display:none;'>
+            <tr>
+                <th nowrap>
+                    NAME
+                    <span class='glyphicon glyphicon-question-sign'
+                      title='User/Repository; click to navigate to repository containing the runcom' />
+                </th>
+                <td> &nbsp</td>
+                <th nowrap> DESC
+                    <span class='glyphicon glyphicon-question-sign'
+                      title='Description of the respository as denoted on Github' />
+                </th>
+                <td> &nbsp</td>
+                <th nowrap> SCORE
+                    <span class='glyphicon glyphicon-question-sign'
+                      title='Score given by Github based on a variety of ranking factors' />
+                </th>
+                <td> &nbsp</td>
+                <th nowrap> FILE
+                    <span class='glyphicon glyphicon-question-sign'
+                      title='Direct link to runcom file' />
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+    function getRuncoms() {
+        var shell = $('input#shell-name').val();
+        $.ajax({
+            url: '/comp74/' + shell,
+            beforeSend: function () {
+                startLoading();
+
+                // clear all but header row
+                $('table#repo-table').find('tr:gt(0)').remove();
+            },
+            success: function (result) {
+                console.log('Success!', result);
+                try {
+                    var parsed = parseRepositories(result.body);
+
+                    for (var item in parsed) {
+                        var name = parsed[item].name;
+                        var url  = parsed[item].url;
+                        var desc = parsed[item].desc;
+                        var score= parsed[item].score;
+                        var rc   = parsed[item].runcom;
+                        var stub = '';
+
+                        if (rc == 'NO MATCH') {
+                            stub = 'N/A';
+                        } else {
+                            stub = '<a target="_blank" href="'
+                              + (url + '/blob/master/' + rc)
+                              + '">' + rc
+                              + '</a>';
+                        }
+
+                        if (item % 2) {
+                            row = '<tr>'
+                        } else {
+                            row = '<tr style="background-color:rgba(0,0,0,0.6)">';
+                        }
+                        row += '<td><a target="_blank" href="'
+                          + url + '">' + name + '</a>'
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + desc
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + score
+                          + '</td>&nbsp<td>'
+                          + '</td><td>' + stub
+                          + '</td></tr>';
+
+                        $('table#repo-table tr:last').after(row);
+                    }
+                } catch (e) { /* I'm not proud of this ... */ }
+
+                /*
+                 * Even "successful" queries can contain 0 results,
+                 * so we react to this.
+                 */
+                var alert;
+                switch (result.summary) {
+                    case 'Failure': alert = 'alert-warning'; break;
+                    case 'Success': alert = 'alert-success'; break;
+                    default:
+                        alert = 'alert-info';
+                }
+
+                updateStatus(alert
+                  , result.summary
+                  , result.message);
+            },
+            error: function (error) {
+                updateStatus('alert-danger'
+                  , 'bad request'
+                  , error.responseText);
+            },
+            complete: function (result) {
+
+                // if unparsable, just assume error
+                try {
+                    doneLoading(JSON
+                      .parse(result.responseText)
+                      .summary);
+                } catch (error) {
+                    doneLoading();
+                }
+            }
+        });
+    }
+
+function parseRepositories(repos) {
+    var set    = [];
+    repos.forEach(function (repo) {
+        var parsed = {};
+        parsed.score= repo.score;
+        parsed.name = repo.full_name;
+        parsed.url  = repo.svn_url;
+        parsed.desc = repo.description;
+        parsed.runcom = repo.runcom;
+        set.push(parsed);
+    });
+    return set;
+}
+
+function updateStatus(status, title, message) {
+    console.log(status, title, message);
+
+    var a = $('[class^="alert"]');
+    var b = $('[class^="alert"] strong');
+    var c = $('[class^="alert"] p');
+
+    if (status === 'alert-info') {
+        b.css('display', 'none');
+        c.css('display', 'none');
+    } else {
+        a.attr('class', 'alert ' + status);
+        b.text(title).css('display', 'inherit');
+        c.text(message).css('display', 'inherit');
+    }
+}
+function startLoading() {
+    $('button.btn').prop('disabled', true);
+    $('table#repo-table').css('display', 'none');
+    $('div.alert').css('display', 'block');
+    $('span.gear').css('display', 'block');
+    updateStatus('alert-info', '', '');
+}
+function doneLoading(status) {
+    $('button.btn').prop('disabled', false);
+    $('span.gear').css('display', 'none');
+
+    // Only display table if there are results to show
+    if (status === 'Success') {
+        $('table#repo-table').css('display', 'table');
+    }
+}
+</script>
+
+<% include sections/foot %>
+
+<!-- unregister keydown even handlers (interfering with data entry) -->
+<script type='text/javascript'>
+    $(document).ready(function () {
+        $(document).off('keydown');
+    })
+</script>
