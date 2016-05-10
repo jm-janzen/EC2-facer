@@ -17,6 +17,7 @@ exports.read = function (path, callback, opts) {
     var options   = checkOptions(opts);
     var type      = options.extension;
 
+    // TODO check '.gitignore' for ignored files, if no parm
     var regex = new RegExp("\\." + type);
     var typeLen = (type.length * -1) -1;
 

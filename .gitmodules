@@ -1,6 +1,6 @@
 [submodule "views/notes"]
 	path = views/notes
-	url = https://github.com/jm-janzen/notes.git
+	url = https://github.com/nullportal/notes.git
 [submodule "views/scripts"]
 	path = views/scripts
 	url = https://github.com/jm-janzen/scripts.git
