@@ -8,13 +8,13 @@
     function timer() {
         var day           = (24 * 60 * 60 * 1000);
         var now           = new Date();
-        var graduation    = new Date('April 19, 2016');
+        var graduation    = new Date('April 29, 2016');
         var remainingMili =
             Math.round(Math.abs(now.getTime() - graduation.getTime()));
         var remainingDays =
             Math.round(Math.abs(now.getTime() - graduation.getTime()) / (day));
         $('#timer').html(remainingMili
-            + 'ms until graduation (or '
+            + 'ms since graduation (or '
             +  remainingDays + ' days)');
     }
     $.ajax({
