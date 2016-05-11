@@ -12,6 +12,14 @@ ul {
     padding-left: 1.5em;
 }
 
+a {
+    color: aquamarine;
+    transition: color 0.3s;
+}
+a:hover {
+    color: white;
+}
+
 #timer {
     background: dimgrey;
     color: white;
