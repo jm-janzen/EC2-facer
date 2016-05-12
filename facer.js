@@ -184,7 +184,7 @@ function validConnection(path) {
 
 function logConnection(req) {
 
-    console.log(req.path);
+    console.log(req.headers.host, req.path);
 
     var now = new Date();
     var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s',
