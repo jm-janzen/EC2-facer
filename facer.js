@@ -8,6 +8,13 @@ var http    = require('http')
   , util    = require('util');
 
 /*
+ * Use nullportal to handle connections on
+ * same such domain.
+ */
+var np = require('./nullportal-web/nullportal.js');
+np.setup();
+
+/*
  * use ejs to serve static files
  */
 app.engine('html', require('ejs').renderFile);
@@ -100,6 +107,10 @@ app.all('/*', function (req, res, next) {
         // TODO put this in validConnection
         if (req.method !== 'GET') {
             res.end('403');
+        } else if (req.headers.host === 'www.nullportal.com') {
+            np.hello(req, function (result) {
+                res.end(result);
+            });
         } else {
             next();
         }
@@ -187,8 +198,8 @@ function logConnection(req) {
     console.log(req.headers.host, req.path);
 
     var now = new Date();
-    var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s',
-      now.toDateString(), now.toLocaleTimeString(),  req.method, req.ip, req.path);
+    var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s%s',
+      now.toDateString(), now.toLocaleTimeString(),  req.method, req.ip, req.headers.host, req.path);
     info += '\n';
     fs.appendFile('logs/connect.log', info, function (error) {
         if (error) throw new Error(("Error writing to file: " + error));
