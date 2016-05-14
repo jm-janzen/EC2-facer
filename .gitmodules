@@ -7,3 +7,6 @@
 [submodule "gq"]
 	path = gq
 	url = https://github.com/nullportal/gq.git
+[submodule "nullportal-web"]
+	path = nullportal-web
+	url = https://github.com/nullportal/nullportal-web.git
