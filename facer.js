@@ -108,7 +108,7 @@ app.all('/*', function (req, res, next) {
         if (req.method !== 'GET') {
             res.end('403');
         } else if (req.headers.host === 'www.nullportal.com') {
-            np.hello(req, function (result) {
+            np.getPage(req, function (result) {
                 res.end(result);
             });
         } else {
