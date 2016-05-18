@@ -19,7 +19,10 @@ np.setup();
  */
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(express.static(__dirname + '/views'));
+
+// Aliases for paths to main and sub website resources
+app.use('/', express.static(__dirname + '/views'));
+app.use('/nullportal-views', express.static(__dirname + '/nullportal-web/views'));
 
 /*
  * get git log file
