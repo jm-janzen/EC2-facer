@@ -92,7 +92,7 @@ app.all('/*', function (req, res, next) {
     } else {
         console.error('Invalid path "%s"', req.path);
         // TODO add proper 404 page
-        res.end('404');
+        res.end('400.html');
     }
     logConnection(req); // TODO log fact of bad conn attempt
 
