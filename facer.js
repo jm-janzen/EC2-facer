@@ -2,7 +2,7 @@
 
 var http    = require('http')
   , fs      = require('fs')
-  , PORT    = 6060
+  , PORT    = 8080 // XXX dev mode
   , express = require('express')
   , app     = express()
   , util    = require('util');
@@ -72,34 +72,6 @@ var scripts = {};
 reader.read('./views/scripts', function (result) {
     scripts = result;
 }, { extension: 'sh' });
-
-/*
- * comp74 related
- */
-
-var gq = require('./gq/gq.js');
-
-app.get('/comp74', function (req, res, next) {
-    res.render('comp74.ejs', {
-        subject: 'COMP74 - Github API',
-    });
-    logConnection(req);
-});
-
-app.get('/comp74/:shell', function (req, res, next) {
-    var shell = req.params.shell;
-
-    try {
-        gq.topRuncoms(shell, function (data) {
-            var status = data.error ? 404 : 200;
-            res.status(status).json(data);
-        });
-    } catch (error) {
-        console.log('gq module threw an error "%s"!', error);
-        res.status(400).end(error.toString());
-    }
-    logConnection(req);
-});
 
 /*
  * HTTP request routers
