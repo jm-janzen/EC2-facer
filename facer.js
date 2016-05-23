@@ -74,34 +74,6 @@ reader.read('./views/scripts', function (result) {
 }, { extension: 'sh' });
 
 /*
- * comp74 related
- */
-
-var gq = require('./gq/gq.js');
-
-app.get('/comp74', function (req, res, next) {
-    res.render('comp74.ejs', {
-        subject: 'COMP74 - Github API',
-    });
-    logConnection(req);
-});
-
-app.get('/comp74/:shell', function (req, res, next) {
-    var shell = req.params.shell;
-
-    try {
-        gq.topRuncoms(shell, function (data) {
-            var status = data.error ? 404 : 200;
-            res.status(status).json(data);
-        });
-    } catch (error) {
-        console.log('gq module threw an error "%s"!', error);
-        res.status(400).end(error.toString());
-    }
-    logConnection(req);
-});
-
-/*
  * HTTP request routers
  */
 app.all('/*', function (req, res, next) {
@@ -120,7 +92,7 @@ app.all('/*', function (req, res, next) {
     } else {
         console.error('Invalid path "%s"', req.path);
         // TODO add proper 404 page
-        res.end('400.html');
+        res.render('400.ejs');
     }
     logConnection(req); // TODO log fact of bad conn attempt
 
