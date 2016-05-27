@@ -7,6 +7,8 @@ var http    = require('http')
   , app     = express()
   , util    = require('util');
 
+var httpCodes = JSON.parse(fs.readFileSync('./views/json/http-codes.json', 'utf8'));
+
 /*
  * Use nullportal to handle connections on
  * same such domain.
