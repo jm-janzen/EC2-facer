@@ -2,7 +2,7 @@
     "Informational":{},
     "Success": {},
     "Redirection": {},
-    "Client-Error":
+    "ClientError":
     {
         "400": "Bad Request",
         "401": "",
@@ -10,5 +10,5 @@
         "404": "Not Found",
         "405": "Method not Allowed"
     },
-    "Server-Error": {}
+    "ServerError": {}
 }
