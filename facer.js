@@ -83,7 +83,9 @@ app.all('/*', function (req, res, next) {
     if (validConnection(req.path)) {
         // TODO put this in validConnection
         if (req.method !== 'GET') {
-            res.end('403');
+            res.render('error.ejs', {
+                httpStatus: httpCodes.ClientError[405]
+            });
         } else if (req.headers.host === 'www.nullportal.com') {
             np.getPage(req, function (result) {
                 res.end(result);
@@ -94,7 +96,7 @@ app.all('/*', function (req, res, next) {
     } else {
         console.error('Invalid path "%s"', req.path);
         res.render('error.ejs', {
-            httpStatus: httpCodes.ClientError[400]
+            httpStatus: httpCodes.ClientError[404]
         });
     }
     logConnection(req); // TODO log fact of bad conn attempt
