@@ -93,8 +93,9 @@ app.all('/*', function (req, res, next) {
         }
     } else {
         console.error('Invalid path "%s"', req.path);
-        // TODO add proper 404 page
-        res.render('400.ejs');
+        res.render('400.ejs', {
+            httpStatus: httpCodes.ClientError[400]
+        });
     }
     logConnection(req); // TODO log fact of bad conn attempt
 

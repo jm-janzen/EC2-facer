@@ -3,7 +3,12 @@
 
 <body>
 
-<h1>404</h1>
-<h2>Resource not Found</h2>
+<%
+    var httpCode = Object.keys(httpStatus);
+    var httpMessage = httpStatus[httpCode];
+%>
+
+<h1> <%= httpCode  %> </h1>
+<h2> <%= httpMessage %> </h2>
 
 </body>
