@@ -7,6 +7,8 @@ var http    = require('http')
   , app     = express()
   , util    = require('util');
 
+var httpCodes = JSON.parse(fs.readFileSync('./views/json/http-codes.json', 'utf8'));
+
 /*
  * Use nullportal to handle connections on
  * same such domain.
@@ -81,7 +83,9 @@ app.all('/*', function (req, res, next) {
     if (validConnection(req.path)) {
         // TODO put this in validConnection
         if (req.method !== 'GET') {
-            res.end('403');
+            res.render('error.ejs', {
+                httpStatus: httpCodes.ClientError[405]
+            });
         } else if (req.headers.host === 'www.nullportal.com') {
             np.getPage(req, function (result) {
                 res.end(result);
@@ -91,8 +95,9 @@ app.all('/*', function (req, res, next) {
         }
     } else {
         console.error('Invalid path "%s"', req.path);
-        // TODO add proper 404 page
-        res.render('400.ejs');
+        res.render('error.ejs', {
+            httpStatus: httpCodes.ClientError[404]
+        });
     }
     logConnection(req); // TODO log fact of bad conn attempt
 

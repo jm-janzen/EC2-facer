@@ -1,0 +1,14 @@
+{
+    "Informational":{},
+    "Success": {},
+    "Redirection": {},
+    "ClientError":
+    {
+        "400": { "400": "Bad Request" },
+        "401": { "401": "Unauthorized" },
+        "403": { "403": "Payment Required" },
+        "404": { "404": "Not Found" },
+        "405": { "405": "Method not Allowed" }
+    },
+    "ServerError": {}
+}
