@@ -2,7 +2,7 @@
 
 var http    = require('http')
   , fs      = require('fs')
-  , PORT    = 8080 // XXX dev mode
+  , PORT    = 6060
   , express = require('express')
   , app     = express()
   , util    = require('util');
@@ -105,7 +105,7 @@ app.all('/*', function (req, res, next) {
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: true,
+        debug: false,
         subject: 'Hello',
         content: bodies['home']
     });
