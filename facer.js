@@ -93,7 +93,7 @@ app.all('/*', function (req, res, next) {
         }
     } else {
         console.error('Invalid path "%s"', req.path);
-        res.render('400.ejs', {
+        res.render('error.ejs', {
             httpStatus: httpCodes.ClientError[400]
         });
     }
