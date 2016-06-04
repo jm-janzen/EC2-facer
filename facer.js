@@ -105,7 +105,7 @@ app.all('/*', function (req, res, next) {
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug: false,
+        debug_mode: false,
         subject: 'Hello',
         content: bodies['home']
     });
