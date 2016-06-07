@@ -1,7 +1,7 @@
 # EC2-facer
 AWS EC2 server files backup mainly
 
-www.jmjanzen.com:8080 - Development. Testbed for new & experimental features.
+www.jmjanzen.com:8080 - Development. Testbed for new & experimental features.  
 www.jmjanzen.com      - Production.  Typically taken from the latest version of the master branch.
 
 ## setup instructions for the novice ubuntu server admin
