@@ -1,5 +1,4 @@
-<head>
-</head>
+<% include sections/head %>
 
 <body>
 
@@ -8,7 +7,22 @@
     var httpMessage = httpStatus[httpCode];
 %>
 
-<h1> <%= httpCode  %> </h1>
-<h2> <%= httpMessage %> </h2>
+<div class='jumbotron'>
+    <div id='status-jumbotron' class='container' >
+        <div style='float: left; width: 50%;'>
+            <h1> <%= httpCode  %> </h1>
+            <p>
+                <span class='glyphicon glyphicon-info-sign'></span>
+                <%= httpMessage %>
+            </p>
+        </div>
+        <div style='justify-content: center; display: flex;'>
+            <p>
+            <a href='/'>Go Back Home</a>
+            </p>
+        </div>
+    </div>
+</div>
+
 
 </body>
