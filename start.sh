@@ -11,6 +11,7 @@ EOF
     exit 1
 else
     ### TODO validate port & token parms
+    ### TODO add parm for debug_mode
 
     echo "Starting facer.js on port $1"
 
