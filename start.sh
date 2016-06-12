@@ -1,9 +1,11 @@
 #!/bin/bash
 
 numArgs=0
+args=()
+
 port=0
-debug=true
-token=false
+debug=0
+token=0
 
 #set -v
 #set -x
@@ -35,16 +37,15 @@ function parseArgs() {
     elif [[ $# -gt 1 ]]; then   # Using port, debug
         port=$1
         debug=$2
-        token=$3
 
         result=0
     elif [[ $# -gt 0 ]]; then   # Using port
         port=$1
-        debug=$2
-        token=$3
 
         result=0
     fi
+
+    args=($port $debug $token)
 
     return "$result"
 }
@@ -86,5 +87,5 @@ fi
 
 printf "[start.sh]:\tStarting facer.js (PORT: $port, DEBUG: $debug)\n"
 
-forever -w --minUptime 1000 --spinSleepTime 1000 facer.js $1 $2
+forever -w --minUptime 1000 --spinSleepTime 1000 facer.js "${args[@]}"
 
