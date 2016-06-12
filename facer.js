@@ -4,7 +4,7 @@
  Use arguments provided by start.sh
  */
 var startup     = {};
-startup.PORT    = process.argv[2] || 8080;
+startup.PORT    = Number(process.argv[2]);
 startup.DEBUG   = String(process.argv[3]) == 'true';
 startup.TOKEN   = process.argv[4] || 0;
 
