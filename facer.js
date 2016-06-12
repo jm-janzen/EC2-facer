@@ -167,7 +167,9 @@ app.get('/scripts/:which', function (req, res) {
  * listen on port 6060 (rerouted from 80)
  */
 app.listen(startup.PORT, function () {
-	console.log('facer listening on port', startup.PORT);
+	console.log('[facer.js]:\tListening on port(%d), with debug(%s)'
+        , startup.PORT
+        , startup.DEBUG);
 });
 
 function validConnection(path) {
