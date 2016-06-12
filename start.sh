@@ -4,7 +4,7 @@ numArgs=0
 args=()
 
 port=0
-debug=0
+debug=true
 token=0
 
 #set -v
