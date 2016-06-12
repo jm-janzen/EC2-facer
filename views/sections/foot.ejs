@@ -30,7 +30,7 @@
     $( document ).ready(function () {
         $('div#navbar a').click(function (event) {
             if ((which = $(this)
-              .not('#timer, .navbar-brand')
+              .not('#timer, #nav_dropdown, .navbar-brand')
               .text()) !== '') {
                 here = navs.indexOf(which);
                 navigate(which, here);

@@ -1,8 +1,15 @@
 'use strict';
 
+/*
+ Use arguments provided by start.sh
+ */
+var startup     = {};
+startup.PORT    = Number(process.argv[2]);
+startup.DEBUG   = String(process.argv[3]) == 'true';
+startup.TOKEN   = process.argv[4] || 0;
+
 var http    = require('http')
   , fs      = require('fs')
-  , PORT    = 6060
   , express = require('express')
   , app     = express()
   , util    = require('util');
@@ -105,7 +112,7 @@ app.all('/*', function (req, res, next) {
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug_mode: false,
+        debug_mode: startup.DEBUG,
         subject: 'Hello',
         content: bodies['home']
     });
@@ -159,8 +166,8 @@ app.get('/scripts/:which', function (req, res) {
 /*
  * listen on port 6060 (rerouted from 80)
  */
-app.listen(PORT, function () {
-	console.log('facer listening on port', PORT);
+app.listen(startup.PORT, function () {
+	console.log('facer listening on port', startup.PORT);
 });
 
 function validConnection(path) {
