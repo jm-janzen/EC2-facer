@@ -32,7 +32,7 @@ ls /usr/local/lib/node_modules | grep 'forever' 1>/dev/null \
 
 function usage() {
     cat <<EOF
-    Usage: ./start.sh <PORT> <DEBUG> [TOKEN]
+    Usage: ./start.sh <port> [debug] [token]
 EOF
     exit 1
 }
