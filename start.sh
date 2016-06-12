@@ -2,8 +2,8 @@
 
 numArgs=0
 port=0
-debug=0
-token=''
+debug=true
+token=false
 
 #set -v
 #set -x
@@ -24,12 +24,25 @@ EOF
 }
 function parseArgs() {
     local result=1
+    numArgs=$#
 
     if [[ $# -gt 2 ]]; then     # Using port, debug, token
+        port=$1
+        debug=$2
+        token=$3
+
         result=0
     elif [[ $# -gt 1 ]]; then   # Using port, debug
+        port=$1
+        debug=$2
+        token=$3
+
         result=0
     elif [[ $# -gt 0 ]]; then   # Using port
+        port=$1
+        debug=$2
+        token=$3
+
         result=0
     fi
 
@@ -47,7 +60,7 @@ function validateArgs() {
 ### main
 ###
 
-printf "[start.sh]: Parsing Arguments...";
+printf "[start.sh]:\tParsing Arguments...";
 parseArgs $@
 success=$?
 if [[ $success -gt 0 ]]; then
@@ -57,8 +70,8 @@ else
     printf "success\n"
 fi
 
-printf "[start.sh]: Validating Arguments..."
-validateArgs "$#"
+printf "[start.sh]:\tValidating Arguments..."
+validateArgs "$port" "$debug" "$token"
 success=$?
 if [[ $success -gt 0 ]]; then
     printf "fail\n"
@@ -71,7 +84,7 @@ fi
 ### TODO validate port & token parms
 ### TODO add parm for debug_mode
 
-echo "Starting facer.js on port $1"
+printf "[start.sh]:\tStarting facer.js (PORT: $port, DEBUG: $debug)\n"
 
 forever -w --minUptime 1000 --spinSleepTime 1000 facer.js $1 $2
 
