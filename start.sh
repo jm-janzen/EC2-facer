@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#
+# Summary
+#   start.sh - start facer.js with parsed, validated parameters.
+#
+# Usage
+#   ./start.sh <port> [debug] [token]
+#
+# Description
+#   Accepts three one to three parameters, in order `port' (a number (necessary)),
+#   `debug' ('true' or 'false' (optional)), and `token' (a security token(optional)).
+#
+
 numArgs=0
 args=()
 
