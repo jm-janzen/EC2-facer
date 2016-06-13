@@ -187,7 +187,7 @@ function logConnection(req) {
     console.log(req.headers.host, req.path);
 
     var now = new Date();
-    var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s%s',
+    var info = util.format('[%s (%s)]:\t\t%s,\t%s,\t%s%s',
       now.toDateString(), now.toLocaleTimeString(),  req.method, req.ip, req.headers.host, req.path);
     info += '\n';
     fs.appendFile('logs/connect.log', info, function (error) {
