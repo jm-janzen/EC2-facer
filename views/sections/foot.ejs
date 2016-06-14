@@ -43,6 +43,9 @@
         });
 
         $(document).keydown(function (event) {
+
+            if (true) return;
+
             switch (event.which) {
                 case 74: // j: scroll down
                     window.scrollBy(0, 30);
