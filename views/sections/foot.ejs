@@ -30,7 +30,7 @@
     $( document ).ready(function () {
         $('div#navbar a').click(function (event) {
             if ((which = $(this)
-              .not('#timer, .navbar-brand')
+              .not('#timer, #nav_dropdown, .navbar-brand')
               .text()) !== '') {
                 here = navs.indexOf(which);
                 navigate(which, here);
@@ -43,6 +43,9 @@
         });
 
         $(document).keydown(function (event) {
+
+            if (true) return;
+
             switch (event.which) {
                 case 74: // j: scroll down
                     window.scrollBy(0, 30);

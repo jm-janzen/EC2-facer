@@ -1,8 +1,15 @@
 'use strict';
 
+/*
+ Use arguments provided by start.sh
+ */
+var startup     = {};
+startup.PORT    = Number(process.argv[2]);
+startup.DEBUG   = String(process.argv[3]) == 'true';
+startup.TOKEN   = process.argv[4] || 0;
+
 var http    = require('http')
   , fs      = require('fs')
-  , PORT    = 8080 // XXX dev mode
   , express = require('express')
   , app     = express()
   , util    = require('util');
@@ -79,10 +86,13 @@ reader.read('./views/scripts', function (result) {
  * HTTP request routers
  */
 app.all('/*', function (req, res, next) {
+    var valid = true;
     res.setHeader('X-Powered-By', 'Maisy');
+
     if (validConnection(req.path)) {
         // TODO put this in validConnection
         if (req.method !== 'GET') {
+            valid = false;
             res.render('error.ejs', {
                 httpStatus: httpCodes.ClientError[405]
             });
@@ -94,18 +104,19 @@ app.all('/*', function (req, res, next) {
             next();
         }
     } else {
+        valid = false;
         console.error('Invalid path "%s"', req.path);
         res.render('error.ejs', {
             httpStatus: httpCodes.ClientError[404]
         });
     }
-    logConnection(req); // TODO log fact of bad conn attempt
+    logConnection(req, valid);
 
 });
 
 app.get('/', function (req, res, next) {
 	res.render('index.ejs', {
-        debug_mode: true,
+        debug_mode: startup.DEBUG,
         subject: 'Hello',
         content: bodies['home']
     });
@@ -159,8 +170,10 @@ app.get('/scripts/:which', function (req, res) {
 /*
  * listen on port 6060 (rerouted from 80)
  */
-app.listen(PORT, function () {
-	console.log('facer listening on port', PORT);
+app.listen(startup.PORT, function () {
+	console.log('[facer.js]:\tListening on port(%d), with debug(%s)'
+        , startup.PORT
+        , startup.DEBUG);
 });
 
 function validConnection(path) {
@@ -173,14 +186,16 @@ function validConnection(path) {
     return result;
 }
 
-function logConnection(req) {
+function logConnection(req, valid) {
 
     console.log(req.headers.host, req.path);
 
     var now = new Date();
-    var info = util.format('[%s (%s)]:\t%s,\t%s,\t%s%s',
+    var info = util.format('[%s (%s)]:\t\t%s,\t%s,\t%s%s',
       now.toDateString(), now.toLocaleTimeString(),  req.method, req.ip, req.headers.host, req.path);
+    if (! valid) info += '\t\t[DENIED]';
     info += '\n';
+
     fs.appendFile('logs/connect.log', info, function (error) {
         if (error) throw new Error(("Error writing to file: " + error));
     });
