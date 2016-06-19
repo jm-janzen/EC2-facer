@@ -1,26 +1,26 @@
 .
 ├── gq/                 -- [ DEPRECATED ] [submodule] 'Github Query' project
-│   └── gq.js
-├── logs/
-│   └── connect.log     -- main log file for connections to facer.js
+│   └── gq.js               -- NodeJS module proper
+├── logs/               -- contains all log files for server, application
+│   └── connect.log         -- main log file for connections to facer.js
 ├── nullportal-web/     -- [submodule] www.nullportal.com
-│   ├── views/
+│   ├── views/              -- logic and text, specific to nullportal website
 │   └── nullportal.js   -- nullportal.com page server
 ├── other/
 │   └── map             -- this file
 ├── views/              -- contains all assets for web view
-│   ├── bodies/         -- textual content for individual elements, pages
-│   ├── images/
-│   ├── json/           -- store of *.json files
-│   ├── notes/          -- [submodule] plain clone of notes repository
-│   ├── scripts/        -- [submodule] plain clone of scripts repository
-│   ├── sections/       -- larger, unchanging blocks of web view markup, logic
-│   ├── styles/         -- global CSS rules
-│   ├── comp74.ejs      -- [ DEPRECATED ] page for gq submodule
-│   ├── error.ejs       -- HTTP error splash page
-│   ├── index.ejs       -- landing page
-│   ├── notes.ejs       -- web view for notes submodule
-│   └── scripts.ejs     -- web view for scripts submodule
+│   ├── bodies/             -- textual content for individual elements, pages
+│   ├── images/             -- all images for web view
+│   ├── json/               -- store of *.json files
+│   ├── notes/              -- [submodule] plain clone of notes repository
+│   ├── scripts/            -- [submodule] plain clone of scripts repository
+│   ├── sections/           -- larger, unchanging blocks of web view markup, logic
+│   ├── styles/             -- global CSS rules
+│   ├── comp74.ejs          -- [ DEPRECATED ] page for gq submodule
+│   ├── error.ejs           -- HTTP error splash page
+│   ├── index.ejs           -- landing page
+│   ├── notes.ejs           -- web view for notes submodule
+│   └── scripts.ejs         -- web view for scripts submodule
 ├── face-read.js        -- read files from submodules for display
 ├── facer.js            -- main server / router
 ├── LICENSE
