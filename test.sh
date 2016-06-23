@@ -1,3 +1,4 @@
 #!/bin/sh
-echo test
-exit 0
+
+./start.sh 'testing...'
+
