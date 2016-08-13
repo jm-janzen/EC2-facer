@@ -9,12 +9,20 @@ www.jmjanzen.com      - Production.  Typically taken from the latest version of 
 git clone https://github.com/jm-janzen/EC2-facer        /* clone this repository to your server */
 cd EC2-facer                                            /* change directory to cloned repository */
 npm install                                             /* install the dependencies facer requires */
-nodejs facer.js                                         /* run, then open browser at the specified port,
+git submodule --init --recursive                        /* download submodules */
+nodejs facer.js <PORT>                                  /* run, then open browser at the specified port,
                                                          * at your server's IP, or DNS */
 ```
+## if you want the server to automatically restart on changes
+```css
+npm install -g forever                                  /* install source file watch module */
+./start.sh <PORT> [true|false]                          /* start launch script; optionally set debug mode
+                                                         * to either true or false */
+```
+
 And if you're missing any of the commands above, simply...
 ```bash
 sudo apt-get <package>
-``` 
+```
 
 Hopefully this can give you a head start on starting your own web server!
