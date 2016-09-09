@@ -76,7 +76,7 @@ var reader  = require('./face-read.js');
 var notes = {};
 reader.read('./views/notes', function (result) {
     notes = result;
-});
+}, {extension: 'mkd' });
 var scripts = {};
 reader.read('./views/scripts', function (result) {
     scripts = result;
