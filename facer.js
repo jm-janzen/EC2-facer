@@ -80,7 +80,7 @@ reader.read('./views/notes', function (result) {
 var scripts = {};
 reader.read('./views/scripts', function (result) {
     scripts = result;
-}, { extension: 'sh' });
+});
 
 /*
  * HTTP request routers
