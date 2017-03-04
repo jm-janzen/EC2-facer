@@ -17,14 +17,18 @@ exports.read = function (path, callback, opts) {
     var options   = checkOptions(opts);
     var type      = options.extension;
 
-    // TODO check '.gitignore' for ignored files, if no parm
-    var regex = new RegExp("\\." + type);
+    // ignore runcoms
+    var regex = new RegExp("^[^\\.][a-zA-Z-_]*\\." + type);
     var typeLen = (type.length * -1) -1;
 
     fs.readdir(path, function (error, files) {
         if (error) throw new Error("Error reading from path: " + path);
 
         for (var file = 0; file < files.length; file++) {
+
+            // skip files without extensions
+            if (files[file].split('.').length < 2) continue;
+
             if (files[file].match(regex)) {
                 // load textFiles with content
                 textFiles[files[file]
@@ -64,8 +68,8 @@ exports.read = function (path, callback, opts) {
                         break;
                 }
             }
-        } else { // load with defaults
-            options.extension = 'txt';
+        } else { // load with defaults (accept any extension)
+            options.extension = '.*';
         }
         return options;
     }
