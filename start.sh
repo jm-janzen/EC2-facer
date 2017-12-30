@@ -22,9 +22,12 @@ token=0
 #set -v
 #set -x
 
-# check for forever module
-ls /usr/local/lib/node_modules | grep 'forever' 1>/dev/null \
-    || echo $(echo 'Install foreverjs globally (`npm install -g forever`) to start this script.') && exit 1
+# Try/catch for forever module
+{
+    which forever
+} || {
+    echo 'Install foreverjs globally (`npm install -g forever`) to start this script.' && exit 1
+}
 
 ###
 ### prototypes
