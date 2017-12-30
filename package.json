@@ -4,8 +4,8 @@
   "description": "nodejs server",
   "main": "facer.js",
   "dependencies": {
-    "ejs": "~2.4.1",
-    "express": "~4.13.4"
+    "ejs": "~>2.5.5",
+    "express": "~4.16.2"
   },
   "devDependencies": {},
   "scripts": {
