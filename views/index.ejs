@@ -1,9 +1,9 @@
-<% include sections/head %>
+<%- include( 'sections/head' ) %>
 
-<% include sections/navbar %>
+<%- include( 'sections/navbar' ) %>
 
 <% if (debug_mode) { %>
-    <% include sections/debug %>
+    <%- include( 'sections/debug' ) %>
 <% } %>
 
         <div class="hero-unit">
@@ -15,4 +15,4 @@
             </div>
         </div>
 
-<% include sections/foot %>
+<%- include( 'sections/foot' ) %>
