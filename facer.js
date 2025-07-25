@@ -17,13 +17,6 @@ var http    = require('http')
 var httpCodes = JSON.parse(fs.readFileSync('./views/json/http-codes.json', 'utf8'));
 
 /*
- * Use nullportal to handle connections on
- * same such domain.
- */
-var np = require('./nullportal-web/nullportal.js');
-np.setup();
-
-/*
  * use ejs to serve static files
  */
 app.engine('html', require('ejs').renderFile);
@@ -31,7 +24,6 @@ app.set('view engine', 'html');
 
 // Aliases for paths to main and sub website resources
 app.use('/', express.static(__dirname + '/views'));
-app.use('/nullportal-views', express.static(__dirname + '/nullportal-web/views'));
 
 /*
  * get git log file
@@ -95,10 +87,6 @@ app.all('/*', function (req, res, next) {
             valid = false;
             res.render('error.ejs', {
                 httpStatus: httpCodes.ClientError[405]
-            });
-        } else if (req.headers.host === 'www.nullportal.com') {
-            np.getPage(req, function (result) {
-                res.end(result);
             });
         } else {
             next();
