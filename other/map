@@ -3,9 +3,6 @@
 │   └── gq.js               -- NodeJS module proper
 ├── logs/               -- contains all log files for server, application
 │   └── connect.log         -- main log file for connections to facer.js
-├── nullportal-web/     -- [submodule] www.nullportal.com
-│   ├── views/              -- logic and text, specific to nullportal website
-│   └── nullportal.js   -- nullportal.com page server
 ├── other/
 │   └── map             -- this file
 ├── views/              -- contains all assets for web view
