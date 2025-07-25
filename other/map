@@ -16,7 +16,6 @@
 │   ├── scripts/            -- [submodule] plain clone of scripts repository
 │   ├── sections/           -- larger, unchanging blocks of web view markup, logic
 │   ├── styles/             -- global CSS rules
-│   ├── comp74.ejs          -- [ DEPRECATED ] page for gq submodule
 │   ├── error.ejs           -- HTTP error splash page
 │   ├── index.ejs           -- landing page
 │   ├── notes.ejs           -- web view for notes submodule
